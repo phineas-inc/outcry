@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, Outlet, useLocation, useSearchParams } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
 import { useTheme } from "@/lib/theme";
@@ -8,7 +8,8 @@ import Credit from "./Credit";
 import Icon from "./Icon";
 
 export default function Layout() {
-  const { pathname, search } = useLocation();
+  const { pathname, search, key } = useLocation();
+  const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const { me, notice, flash, dismissNotice } = useStore();
   const { t, lang, setLang } = useI18n();
@@ -48,7 +49,7 @@ export default function Layout() {
   }, [me, t]);
 
   return (
-    <div className={`app ${isApp ? "is-app" : ""}`}>
+    <div className={`app ${isApp ? "is-app" : ""} ${onMap ? "map-page" : ""}`}>
       <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); const m = document.getElementById("main"); m?.focus(); m?.scrollIntoView(); }}>{t("skip")}</a>
       <header className={`topbar ${onExplore ? "has-search" : ""}`}>
         <Link className="brand" to="/" aria-label={t("brand.home")}><span className="brand-mark">O</span><span>OUTCRY</span><i>{t("brand.tag")}</i></Link>
@@ -67,7 +68,12 @@ export default function Layout() {
           </button>
         </div>
         <div className="voice" title={t("voice.title")}><span>{t("voice.label")}</span><strong>{me?.credits ?? "–"}</strong><i>{t("voice.today", { max: MAX_VOICE })}</i></div>
-        <Link className="avatar" to="/me" aria-label={t("profile.open")}><Icon name="user" size={18} /></Link>
+        {pathname === "/me" ? (
+          // Toggle: the profile icon closes the profile, returning to the previous page (or the map if opened directly).
+          <button className="avatar active" aria-pressed="true" aria-label={t("profile.close")} title={t("profile.close")} onClick={() => (key !== "default" ? navigate(-1) : navigate("/"))}><Icon name="close" size={18} /></button>
+        ) : (
+          <Link className="avatar" to="/me" aria-label={t("profile.open")}><Icon name="user" size={18} /></Link>
+        )}
       </header>
       <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       {(notice || flash) && <div className={`toast ${notice ? "" : "info"}`} role={notice ? "alert" : "status"}><span>{notice ?? flash}</span>{notice && <button onClick={dismissNotice} aria-label={t("detail.close")}><Icon name="close" size={14} /></button>}</div>}

@@ -23,6 +23,8 @@ export default function Explore({ view }: { view: "map" | "list" }) {
   const navigate = useNavigate();
   const [sort, setSort] = useState<Sort>("trending");
   const [f, setF] = useState(initial);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const activeFilters = Object.values(f).filter((v) => v !== "all").length;
   const q = (params.get("q") ?? "").toLowerCase();
   const selected = protests.find((p) => p.id === id) ?? null;
   const regions = useMemo(() => [...new Set(protests.map((p) => p.continent))].sort(), [protests]);
@@ -60,14 +62,20 @@ export default function Explore({ view }: { view: "map" | "list" }) {
 
   return (
     <>
-      <nav className="filters" aria-label={t("filters.aria")}>
+      <nav className={`filters ${filtersOpen ? "open" : ""}`} aria-label={t("filters.aria")}>
+        <button className="filters-toggle" aria-expanded={filtersOpen} aria-controls="filter-fields" onClick={() => setFiltersOpen(!filtersOpen)}>
+          <Icon name="list" size={16} /><span>{t("filters.toggle")}{activeFilters ? ` · ${t("filters.active", { n: activeFilters })}` : ""}</span>
+          <span className="count" role="status">{t("filters.count", { n: filtered.length })}</span><Icon name="chevron" size={14} />
+        </button>
+        <div className="filter-fields" id="filter-fields">
         <span className="filter-label">{t("filters.desk")}</span>
         {select("region", t("filters.region"), [["all", t("filters.worldwide")], ...regions.map((r): [string, string] => [r, t(`continent.${r}` as Key)])])}
         {select("topic", t("filters.topic"), [["all", t("filters.allTopics")], ...topics.map((x): [string, string] => [x, t(`topic.${x}` as Key)])])}
         {select("size", t("filters.size"), [["all", t("filters.anySize")], ["small", t("filters.small")], ["medium", t("filters.medium")], ["large", t("filters.large")]])}
         {select("status", t("filters.status"), [["all", t("filters.anyStatus")], ...statuses.map((s): [string, string] => [s, t(`status.${s}` as Key)])])}
         {select("lean", t("filters.coverage"), [["all", t("filters.anyLean")], ["balanced", t("filters.balanced")], ["blindspot", t("filters.blindspots")]])}
-        <span className="result-count" role="status">{t("filters.count", { n: filtered.length })}</span>
+        <span className="result-count">{t("filters.count", { n: filtered.length })}</span>
+        </div>
       </nav>
       <main id="main" tabIndex={-1}>
         {!ready ? <div className="loading" role="status">{t("explore.loading")}</div> : view === "list" ? (
