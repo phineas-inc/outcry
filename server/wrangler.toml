@@ -10,4 +10,4 @@ ALLOWED_ORIGINS = "https://tahire29-spec.github.io"
 binding = "DB"
 database_name = "outcry"
 # database_id is filled in by `npm run d1:create` (see README).
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "eccd2154-fb48-4f62-b0bd-4982f2fe2805"
