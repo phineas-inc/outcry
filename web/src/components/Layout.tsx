@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet, useLocation, useSearchParams } from "react-router-dom";
 import { useStore } from "@/lib/store";
 import { MAX_VOICE } from "@shared/rules.ts";
+import Credit from "./Credit";
 import Icon from "./Icon";
 
 export default function Layout() {
@@ -41,6 +42,7 @@ export default function Layout() {
           <nav aria-label="Footer"><Link to="/method">How it works</Link><Link to="/privacy">Privacy</Link><a href="https://github.com/tahire29-spec/outcry" target="_blank" rel="noreferrer">Open source</a></nav>
         </footer>
       )}
+      <Credit />
       {isApp && (
         <nav className="tabbar" aria-label="App">
           <Link className={onExplore && view === "list" ? "on" : ""} to="/app"><Icon name="list" /><span>Feed</span></Link>
