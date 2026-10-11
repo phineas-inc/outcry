@@ -8,10 +8,13 @@ export interface Article { outlet: string; lean: Lean; headline: string; publish
 
 export interface Protest {
   id: string; title: string; summary: string; city: string; country: string; continent: string;
-  lat: number; lng: number; startDate: string; crowdEstimate: number; topic: Topic; status: Status;
-  coverage: { left: number; center: number; right: number; sourceCount: number };
+  lat: number; lng: number; startDate: string; crowdEstimate: number | null; topic: Topic; status: Status;
+  coverage: { left: number; center: number; right: number; rated?: number; sourceCount: number };
   articles: Article[]; causeScore: number; actionScore: number;
+  summaryAi?: boolean; articleCount?: number; updatedAt?: string;
 }
+
+export interface PipelineStatus { lastCollect: string | null; lastBuild: string | null; movements: number; articlesTracked: number }
 
 export interface Me {
   credits: number; xp: number; level: number; streak: number;

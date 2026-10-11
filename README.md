@@ -4,7 +4,19 @@ A live protest desk: track movements worldwide on a list or world map, see how L
 
 Website: https://tahire29-spec.github.io/outcry/
 
-> **Data note:** this release ships with sample movements and fictional outlets. Live ingestion is not built yet.
+> **Data:** movements are built from real, current news. A bot reads public RSS feeds from ~40 outlets every hour, an AI model (Cloudflare Workers AI, free tier) picks out real protests and writes neutral titles/summaries **from the headlines only**, and stories reported by 2+ outlets become movements. Summaries can be wrong, so every movement links to its source articles. Left/Center/Right labels are approximate (`server/src/ingest/outlets.ts`, editable). Offline mode (no API) shows sample data instead.
+
+## How the live data works
+
+`server/src/ingest/` runs as four staged Cloudflare cron triggers (staged to fit the free plan's CPU limit):
+
+| Cron (UTC) | Stage | What |
+| --- | --- | --- |
+| `:05`, `:12` | `collect`, `collect2` | Fetch RSS feeds, keep headlines that look like protest coverage, store new ones. (GDELT is attempted but usually rate-limits; it's optional.) |
+| `:20`, `:50` | `classify` | AI labels each new headline: real protest or not, city, country, topic. Capped at 100 AI calls/day. |
+| `:35` | `build` | Geocode places (Open-Meteo, cached), cluster by location, compute coverage split and status, write neutral AI summaries, upsert movements, hide ones with no news for 7 days. |
+
+Nothing is scraped from article pages; only headlines and links from feeds published for syndication. Crowd sizes appear only when a headline states an explicit number.
 
 ## Layout
 
@@ -35,17 +47,18 @@ Tests: `cd server && npm test`.
 cd server && npm install
 npx wrangler login
 npx wrangler d1 create outcry          # copy the database_id into wrangler.toml
-npm run seed:sql && npx wrangler d1 execute outcry --remote --file=seed.sql
-npm run deploy                         # prints https://outcry-api.<you>.workers.dev
+npm run migrate:live                   # creates the schema
+openssl rand -hex 24 | npx wrangler secret put INGEST_TOKEN   # protects the manual trigger
+npm run deploy                         # prints https://outcry-api.<you>.workers.dev; cron triggers start hourly
 ```
 
-Then set the repo variable `API_URL` to that URL. Local Workers dev: `npm run dev:worker` (local D1, port 8788). `ALLOWED_ORIGINS` in `wrangler.toml` limits which sites may call the API.
+Then set the repo variable `API_URL` to that URL. To fill the dashboard immediately instead of waiting for the crons: `curl -X POST -H "Authorization: Bearer $INGEST_TOKEN" "$API/api/admin/ingest?stage=collect"` (then `collect2`, `classify`, `build`). Local Workers dev: `npm run dev:worker` (local D1, port 8788). `ALLOWED_ORIGINS` in `wrangler.toml` limits which sites may call the API.
 
 The same code also runs on plain Node + SQLite (`npm run dev`, or `server/Dockerfile` with build context = repo root) for self-hosting.
 
 ## API
 
-`GET /api/protests` · `GET /api/protests/:id` · `GET /api/me` · `POST /api/protests/:id/reads {lean}` · `POST /api/protests/:id/votes {kind, direction, strength}`. Identity is an `X-Device-Id` header (random UUID generated in the browser); this is anonymous and spoofable by design, so treat votes as non-authoritative until accounts exist.
+`GET /api/protests` · `GET /api/protests/:id` · `GET /api/status` · `GET /api/me` · `POST /api/protests/:id/reads {lean}` · `POST /api/protests/:id/votes {kind, direction, strength}`. Identity is an `X-Device-Id` header (random UUID generated in the browser); this is anonymous and spoofable by design, so treat votes as non-authoritative until accounts exist.
 
 ## License
 

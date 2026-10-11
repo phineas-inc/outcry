@@ -3,4 +3,6 @@ export interface Db {
   all<T = any>(sql: string, ...params: unknown[]): Promise<T[]>;
   first<T = any>(sql: string, ...params: unknown[]): Promise<T | undefined>;
   run(sql: string, ...params: unknown[]): Promise<{ changes: number }>;
+  /** Runs statements atomically in one round trip. */
+  batch(statements: [sql: string, ...params: unknown[]][]): Promise<void>;
 }

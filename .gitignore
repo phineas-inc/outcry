@@ -11,3 +11,4 @@ data/
 *.log
 seed.sql
 .wrangler/
+migrate.sql

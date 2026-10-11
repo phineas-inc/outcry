@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { fmt, hoursAgo, signed } from "@/lib/format";
+import { ago, fmt, hoursAgo, placeOf, signed } from "@/lib/format";
 import { useStore } from "@/lib/store";
-import { LEANS, maxStrength, voteCost } from "@shared/rules.ts";
+import { LEANS, maxStrength, requiredLeans, voteCost } from "@shared/rules.ts";
 import type { Lean, Protest, VoteKind } from "@/lib/types";
 import { BiasBar, StatusChip } from "./Bits";
 import Icon from "./Icon";
@@ -56,7 +56,8 @@ function VoteControl({ label, score, kind, unlocked, credits, onCast }: {
 export default function Detail({ protest, onClose }: { protest: Protest; onClose: () => void }) {
   const { me, readArticle, vote } = useStore();
   const reads = me?.reads[protest.id] ?? [];
-  const unlocked = maxStrength(reads) > 1;
+  const available = LEANS.filter((l) => protest.articles.some((a) => a.lean === l));
+  const unlocked = maxStrength(reads, available) > 1;
   const credits = me?.credits ?? 0;
   const closeRef = useRef<HTMLButtonElement>(null);
   const onCloseRef = useRef(onClose);
@@ -90,10 +91,11 @@ export default function Detail({ protest, onClose }: { protest: Protest; onClose
             <button ref={closeRef} className="icon-button" aria-label="Close" onClick={onClose}><Icon name="close" /></button>
           </div>
         </div>
-        <div className="detail-location">{protest.city} <span>/</span> {protest.country}</div>
+        <div className="detail-location">{protest.city === protest.country ? <>{protest.country} <span>/</span> nationwide</> : <>{protest.city} <span>/</span> {protest.country}</>}</div>
         <h2>{protest.title}</h2>
-        <p className="summary">{protest.summary}</p>
-        <div className="detail-meta"><StatusChip status={protest.status} /><span className="topic">{protest.topic}</span><span>{fmt.format(protest.crowdEstimate)} estimated</span></div>
+        {protest.summary && <p className="summary">{protest.summary}</p>}
+        {protest.summaryAi && <p className="ai-note">AI-written from the headlines below. Check the sources.{protest.updatedAt && ` Last report ${ago(protest.updatedAt)}.`}</p>}
+        <div className="detail-meta"><StatusChip status={protest.status} /><span className="topic">{protest.topic}</span>{protest.crowdEstimate ? <span>{fmt.format(protest.crowdEstimate)} reported</span> : <span>size not reported</span>}</div>
         <BiasBar protest={protest} />
         <section className="vote-section">
           <div className="section-heading">
@@ -105,8 +107,8 @@ export default function Detail({ protest, onClose }: { protest: Protest; onClose
             <VoteControl label="Support the action?" kind="action" score={protest.actionScore} unlocked={unlocked} credits={credits} onCast={(d, s) => vote(protest.id, "action", d, s)} />
           </div>
           <div className={`read-unlock ${unlocked ? "unlocked" : ""}`}>
-            <div className="read-dots">{LEANS.map((l) => <span key={l} className={reads.includes(l) ? "read" : ""}>{l[0]}</span>)}</div>
-            <p>{unlocked ? "Spectrum unlocked — strength 3 available" : "Open one article from each perspective to unlock stronger votes."}</p>
+            <div className="read-dots">{LEANS.map((l) => <span key={l} className={`${reads.includes(l) ? "read" : ""} ${available.includes(l) ? "" : "absent"}`}>{l[0]}</span>)}</div>
+            <p>{unlocked ? "Spectrum unlocked — strength 3 available" : requiredLeans(available).length < 2 ? "Only one perspective has covered this so far, so stronger votes are locked." : "Open one article from each perspective to unlock stronger votes."}</p>
           </div>
         </section>
         <section className="coverage-section">
@@ -115,6 +117,7 @@ export default function Detail({ protest, onClose }: { protest: Protest; onClose
             {LEANS.map((lean: Lean) => (
               <div className={`article-column lean-${lean.toLowerCase()}`} key={lean}>
                 <div className="column-head"><span>{lean}</span><b>{protest.coverage[lean.toLowerCase() as "left" | "center" | "right"]}%</b></div>
+                {protest.articles.filter((a) => a.lean === lean).length === 0 && <div className="article none"><span>No coverage found</span></div>}
                 {protest.articles.filter((a) => a.lean === lean).map((a) => {
                   const body = <><span>{a.outlet} · {hoursAgo(a.publishedAt)}h{!a.url && " · sample"}</span><strong>{a.headline}</strong><Icon name={a.url ? "external" : "arrow"} size={14} /></>;
                   return a.url

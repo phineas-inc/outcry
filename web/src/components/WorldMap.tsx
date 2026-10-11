@@ -3,7 +3,7 @@ import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import world from "world-atlas/countries-110m.json";
-import { fmt } from "@/lib/format";
+import { fmt, placeOf } from "@/lib/format";
 import type { Protest } from "@/lib/types";
 import Icon from "./Icon";
 
@@ -110,7 +110,7 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
               </g>
             ) : (() => {
               const { p } = c.items[0];
-              const r = Math.max(5, Math.min(13, 4 + Math.sqrt(p.crowdEstimate) / 40));
+              const r = Math.max(5, Math.min(13, 4 + Math.sqrt(p.crowdEstimate ?? 2000) / 40));
               return (
                 <g key={p.id} className={`marker-g ${p.status.replace(" ", "-")}`} transform={`translate(${c.x} ${c.y}) scale(${inv})`} tabIndex={0} role="button"
                   aria-label={`${p.title}, ${p.city}`} onClick={guard(() => onOpen(p))} onKeyDown={(e) => e.key === "Enter" && onOpen(p)}
@@ -121,7 +121,7 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
             })())}
           </g>
         </svg>
-        {hover && <div className="map-tooltip" style={{ left: hover.left, top: hover.top }}><span>{hover.p.city}, {hover.p.country}</span><strong>{hover.p.title}</strong><small>{fmt.format(hover.p.crowdEstimate)} · {hover.p.status}</small></div>}
+        {hover && <div className="map-tooltip" style={{ left: hover.left, top: hover.top }}><span>{placeOf(hover.p)}</span><strong>{hover.p.title}</strong><small>{hover.p.crowdEstimate ? `${fmt.format(hover.p.crowdEstimate)} · ` : ""}{hover.p.status}</small></div>}
         <div className="map-caption"><span className="live-dot" />Tracking {protests.length} movements</div>
         <div className="map-controls">
           <button onClick={() => zoomAt(1.6)} aria-label="Zoom in"><Icon name="plus" /></button>
@@ -135,7 +135,7 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
           <div className="map-list">{protests.map((p) => (
             <button key={p.id} onClick={() => onOpen(p)}>
               <span className={`map-list-dot ${p.status.replace(" ", "-")}`} />
-              <span><strong>{p.title}</strong><small>{p.city} · {fmt.format(p.crowdEstimate)}</small></span>
+              <span><strong>{p.title}</strong><small>{p.city === p.country ? "Nationwide" : p.city}{p.crowdEstimate ? ` · ${fmt.format(p.crowdEstimate)}` : ""}</small></span>
               <Icon name="arrow" size={14} />
             </button>
           ))}</div>

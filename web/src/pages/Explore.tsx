@@ -4,6 +4,7 @@ import { ProtestCard } from "@/components/Bits";
 import Detail from "@/components/Detail";
 import Icon from "@/components/Icon";
 import WorldMap from "@/components/WorldMap";
+import { ago } from "@/lib/format";
 import { useStore } from "@/lib/store";
 import type { Protest, Status, Topic } from "@/lib/types";
 
@@ -13,7 +14,7 @@ const statuses: Status[] = ["active", "escalating", "winding down"];
 const initial = { region: "all", topic: "all", size: "all", status: "all", lean: "all" };
 
 export default function Explore() {
-  const { protests, ready, mode } = useStore();
+  const { protests, ready, mode, status } = useStore();
   const [params] = useSearchParams();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -28,17 +29,18 @@ export default function Explore() {
 
   const filtered = useMemo(() => {
     const out = protests.filter((p) => {
-      const size = f.size === "all" || (f.size === "small" && p.crowdEstimate < 10000) || (f.size === "medium" && p.crowdEstimate >= 10000 && p.crowdEstimate < 50000) || (f.size === "large" && p.crowdEstimate >= 50000);
+      const n = p.crowdEstimate ?? 0;
+      const size = f.size === "all" || (f.size === "small" && p.crowdEstimate !== null && n < 10000) || (f.size === "medium" && n >= 10000 && n < 50000) || (f.size === "large" && n >= 50000);
       const c = p.coverage;
       const lean = f.lean === "all" || (f.lean === "balanced" && Math.max(c.left, c.center, c.right) < 50) || (f.lean === "blindspot" && (c.left < 10 || c.right < 10));
       return (!q || `${p.title} ${p.city} ${p.country}`.toLowerCase().includes(q)) && (f.region === "all" || p.continent === f.region)
         && (f.topic === "all" || p.topic === f.topic) && (f.status === "all" || p.status === f.status) && size && lean;
     });
     const by: Record<Sort, (a: Protest, b: Protest) => number> = {
-      largest: (a, b) => b.crowdEstimate - a.crowdEstimate,
+      largest: (a, b) => (b.crowdEstimate ?? 0) - (a.crowdEstimate ?? 0),
       newest: (a, b) => +new Date(b.startDate) - +new Date(a.startDate),
       contested: (a, b) => Math.abs(a.causeScore - a.actionScore) - Math.abs(b.causeScore - b.actionScore),
-      trending: (a, b) => b.coverage.sourceCount + b.crowdEstimate / 1000 - (a.coverage.sourceCount + a.crowdEstimate / 1000),
+      trending: (a, b) => b.coverage.sourceCount + (b.crowdEstimate ?? 0) / 1000 - (a.coverage.sourceCount + (a.crowdEstimate ?? 0) / 1000),
     };
     return [...out].sort(by[sort]);
   }, [protests, q, f, sort]);
@@ -68,7 +70,7 @@ export default function Explore() {
           <div className="list-view">
             <div className="page-heading">
               <div>
-                <span className="eyebrow"><i className="live-dot" />Global situation room · Sample data{mode === "offline" ? " · Offline mode" : ""}</span>
+                <span className="eyebrow"><i className="live-dot" />{mode === "live" ? `Live · updated ${status?.lastBuild ? ago(status.lastBuild) : "soon"}` : "Sample data · Offline mode"}</span>
                 <h1>Where the world is raising its voice.</h1>
                 <p>Live movements, measured across the media spectrum.</p>
               </div>
@@ -81,7 +83,8 @@ export default function Explore() {
             <div className="list-columns">
               <div className="column-labels"><span>Movement</span><span>Public signal</span></div>
               {filtered.map((p) => <ProtestCard key={p.id} protest={p} onOpen={() => open(p)} />)}
-              {filtered.length === 0 && <div className="empty"><strong>No movements match these filters.</strong><button onClick={() => setF(initial)}>Clear filters</button></div>}
+              {filtered.length === 0 && protests.length === 0 && <div className="empty"><strong>No movements yet.</strong><span>The newsroom bot checks for new protest coverage every hour.</span></div>}
+              {filtered.length === 0 && protests.length > 0 && <div className="empty"><strong>No movements match these filters.</strong><button onClick={() => setF(initial)}>Clear filters</button></div>}
             </div>
           </div>
         ) : <WorldMap protests={filtered} onOpen={open} />}

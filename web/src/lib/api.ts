@@ -1,6 +1,6 @@
 import seed from "@shared/protests.seed.json";
-import { LEANS, MAX_VOICE, XP_PER_BRIDGE, badgesFor, dayKey, isBlindspot, levelOf, maxStrength, nextStreak, voteCost } from "@shared/rules.ts";
-import type { Lean, Me, Protest, VoteKind } from "./types";
+import { LEANS, MAX_VOICE, XP_PER_BRIDGE, badgesFor, dayKey, isBlindspot, levelOf, maxStrength, nextStreak, sidesComplete, voteCost } from "@shared/rules.ts";
+import type { Lean, Me, PipelineStatus, Protest, VoteKind } from "./types";
 
 const API_URL = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "");
 export const hasBackend = Boolean(API_URL);
@@ -8,6 +8,7 @@ export const hasBackend = Boolean(API_URL);
 export interface Api {
   mode: "live" | "offline";
   protests(): Promise<Protest[]>;
+  status(): Promise<PipelineStatus | null>;
   me(): Promise<Me>;
   read(id: string, lean: Lean): Promise<Me>;
   vote(id: string, kind: VoteKind, direction: 1 | -1, strength: 1 | 2 | 3): Promise<{ me: Me; protest?: Protest }>;
@@ -41,6 +42,7 @@ function live(): Api {
   return {
     mode: "live",
     protests: () => call("/api/protests"),
+    status: () => call<PipelineStatus>("/api/status").catch(() => null),
     me: () => call("/api/me"),
     read: (id, lean) => call(`/api/protests/${id}/reads`, { lean }),
     vote: (id, kind, direction, strength) => call(`/api/protests/${id}/votes`, { kind, direction, strength }),
@@ -70,7 +72,7 @@ function offline(): Api {
     base.map((p) => ({ ...p, causeScore: p.causeScore + (s.votes[p.id]?.cause ?? 0), actionScore: p.actionScore + (s.votes[p.id]?.action ?? 0) }));
   const toMe = (s: LocalState): Me => {
     const spent = s.spentDay === dayKey() ? s.spent : 0;
-    const fullyRead = Object.entries(s.reads).filter(([, l]) => l.length === 3)
+    const fullyRead = Object.entries(s.reads).filter(([, l]) => sidesComplete(l, LEANS))
       .map(([id]) => base.find((p) => p.id === id)).filter((p): p is Protest => !!p)
       .map((p) => ({ continent: p.continent, blindspot: isBlindspot(p.coverage) }));
     return { credits: MAX_VOICE - spent, xp: s.xp, level: levelOf(s.xp), streak: s.streak, votes: s.votes, reads: s.reads, badges: badgesFor(fullyRead, s.streak) };
@@ -79,13 +81,14 @@ function offline(): Api {
   return {
     mode: "offline",
     protests: async () => withVotes(loadLocal()),
+    status: async () => null,
     me: async () => toMe(loadLocal()),
     read: async (id, lean) => {
       const s = loadLocal();
       const have = s.reads[id] ?? [];
       if (LEANS.includes(lean) && !have.includes(lean)) {
         s.reads[id] = [...have, lean];
-        if (s.reads[id].length === 3) {
+        if (sidesComplete(s.reads[id], LEANS)) {
           const today = dayKey();
           s.xp += XP_PER_BRIDGE; s.streak = nextStreak(s.streak, s.lastBridge, today); s.lastBridge = today;
         }

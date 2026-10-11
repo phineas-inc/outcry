@@ -2,10 +2,12 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { env } from "hono/adapter";
 import {
-  LEANS, MAX_VOICE, XP_PER_BRIDGE, badgesFor, dayKey, isBlindspot, levelOf, maxStrength, nextStreak, voteCost,
+  LEANS, MAX_VOICE, XP_PER_BRIDGE, badgesFor, dayKey, isBlindspot, levelOf, maxStrength, nextStreak, sidesComplete, voteCost,
   type Lean, type VoteKind,
 } from "../../shared/rules.ts";
 import { d1Db, type D1Like } from "./d1.ts";
+import type { AiLike } from "./ingest/classify.ts";
+import { runStage, type Stage } from "./ingest/pipeline.ts";
 import type { Db } from "./types.ts";
 
 const nodeEnv: Record<string, string | undefined> = typeof process !== "undefined" ? process.env : {};
@@ -15,13 +17,16 @@ const PROTEST_SQL = `
   SELECT p.*, p.cause_base + COALESCE((SELECT SUM(cause) FROM votes WHERE protest = p.id), 0) AS cause_score,
          p.action_base + COALESCE((SELECT SUM(action) FROM votes WHERE protest = p.id), 0) AS action_score
   FROM protests p`;
+const LIST_SQL = `${PROTEST_SQL} WHERE p.hidden = 0 ORDER BY p.last_seen DESC`;
+const availableOf = (articles: { lean: Lean }[]): Lean[] => LEANS.filter((l) => articles.some((a) => a.lean === l));
 
 function shape(r: any) {
   return {
     id: r.id, title: r.title, summary: r.summary, city: r.city, country: r.country, continent: r.continent,
     lat: r.lat, lng: r.lng, startDate: r.start_date, crowdEstimate: r.crowd, topic: r.topic, status: r.status,
-    coverage: { left: r.cov_left, center: r.cov_center, right: r.cov_right, sourceCount: r.source_count },
+    coverage: { left: r.cov_left, center: r.cov_center, right: r.cov_right, rated: r.rated ?? r.source_count, sourceCount: r.source_count },
     causeScore: r.cause_score, actionScore: r.action_score, articles: JSON.parse(r.articles),
+    summaryAi: Boolean(r.summary_ai), articleCount: r.article_count, updatedAt: r.last_seen,
   };
 }
 
@@ -37,7 +42,7 @@ async function me(db: Db, device: string) {
     db.first("SELECT * FROM devices WHERE id = ?", device),
     db.all("SELECT * FROM votes WHERE device = ?", device),
     db.all("SELECT protest, lean FROM reads WHERE device = ?", device),
-    db.all("SELECT id, continent, cov_left, cov_right FROM protests"),
+    db.all("SELECT id, continent, cov_left, cov_right, rated, source_count, articles FROM protests"),
   ]);
   const spent = d.spent_day === today ? d.spent : 0;
   const votes: Record<string, { cause: number; action: number }> = {};
@@ -46,13 +51,13 @@ async function me(db: Db, device: string) {
   for (const r of readRows) (reads[r.protest] ||= []).push(r.lean);
   const meta = new Map(metaRows.map((p: any) => [p.id, p]));
   const fullyRead = Object.entries(reads)
-    .filter(([, l]) => l.length === 3)
-    .map(([id]) => meta.get(id)).filter(Boolean)
-    .map((p: any) => ({ continent: p.continent, blindspot: isBlindspot({ left: p.cov_left, right: p.cov_right }) }));
+    .map(([id, l]) => [meta.get(id), l] as const)
+    .filter(([p, l]) => p && sidesComplete(l, availableOf(JSON.parse(p.articles))))
+    .map(([p]: any) => ({ continent: p.continent, blindspot: isBlindspot({ left: p.cov_left, right: p.cov_right, rated: p.rated ?? p.source_count }) }));
   return { credits: MAX_VOICE - spent, xp: d.xp, level: levelOf(d.xp), streak: d.streak, votes, reads, badges: badgesFor(fullyRead, d.streak) };
 }
 
-type Bindings = { DB?: D1Like; ALLOWED_ORIGINS?: string; RATE_LIMIT?: string };
+type Bindings = { DB?: D1Like; AI?: AiLike; ALLOWED_ORIGINS?: string; RATE_LIMIT?: string; INGEST_TOKEN?: string };
 type Vars = { db: Db };
 
 /** Pass `db` for Node; on Cloudflare Workers omit it and bind a D1 database as `DB`. */
@@ -96,7 +101,29 @@ export function createApp(opts: { db?: Db } = {}) {
 
   app.get("/api/health", (c) => c.json({ ok: true }));
 
-  app.get("/api/protests", async (c) => c.json((await c.var.db.all(PROTEST_SQL)).map(shape)));
+  app.get("/api/protests", async (c) => c.json((await c.var.db.all(LIST_SQL)).map(shape)));
+
+  app.get("/api/status", async (c) => {
+    const db = c.var.db;
+    const meta = Object.fromEntries((await db.all("SELECT key, value FROM meta")).map((m: any) => [m.key, m.value]));
+    const n = async (sql: string) => (await db.first(sql)).n as number;
+    return c.json({
+      lastCollect: meta.last_collect ?? null, lastClassify: meta.last_classify ?? null, lastBuild: meta.last_build ?? null,
+      movements: await n("SELECT COUNT(*) AS n FROM protests WHERE hidden = 0"),
+      articlesTracked: await n("SELECT COUNT(*) AS n FROM seen_articles WHERE is_protest = 1"),
+      aiCallsToday: meta.ai_day === dayKey() ? Number(meta.ai_calls ?? 0) : 0,
+    });
+  });
+
+  // Manual trigger for the ingestion pipeline (the cron triggers call the same code). Requires the INGEST_TOKEN secret.
+  app.post("/api/admin/ingest", async (c) => {
+    const token = env(c).INGEST_TOKEN ?? nodeEnv.INGEST_TOKEN;
+    const given = (c.req.header("authorization") ?? "").replace(/^Bearer /, "");
+    if (!token || given.length !== token.length || [...token].reduce((d, ch, i) => d | (ch.charCodeAt(0) ^ given.charCodeAt(i)), 0) !== 0) return c.json({ error: "Unauthorized" }, 401);
+    const stage = (c.req.query("stage") ?? "all") as Stage | "all";
+    if (!["all", "collect", "collect2", "classify", "build"].includes(stage)) return c.json({ error: "Invalid stage" }, 400);
+    return c.json(await runStage(stage, c.var.db, { fetch: (u, i) => fetch(u, i), ai: c.env?.AI }));
+  });
 
   app.get("/api/protests/:id", async (c) => {
     const p = await protestRow(c.var.db, c.req.param("id"));
@@ -117,10 +144,11 @@ export function createApp(opts: { db?: Db } = {}) {
     if (!(await protestRow(db, id))) return c.json({ error: "Not found" }, 404);
     if (!LEANS.includes(body.lean)) return c.json({ error: "Invalid lean" }, 400);
     await me(db, device);
-    const count = async () => (await db.first("SELECT COUNT(*) AS n FROM reads WHERE device = ? AND protest = ?", device, id)).n as number;
-    const before = await count();
+    const available = availableOf((await protestRow(db, id))!.articles);
+    const readsOf = async () => (await db.all("SELECT lean FROM reads WHERE device = ? AND protest = ?", device, id)).map((r: any) => r.lean as Lean);
+    const before = sidesComplete(await readsOf(), available);
     await db.run("INSERT OR IGNORE INTO reads VALUES (?,?,?)", device, id, body.lean);
-    if (before < 3 && (await count()) === 3) {
+    if (!before && sidesComplete(await readsOf(), available)) {
       const today = dayKey();
       const d = await db.first("SELECT streak, last_bridge FROM devices WHERE id = ?", device);
       await db.run("UPDATE devices SET xp = xp + ?, streak = ?, last_bridge = ? WHERE id = ?", XP_PER_BRIDGE, nextStreak(d.streak, d.last_bridge, today), today, device);
@@ -141,7 +169,8 @@ export function createApp(opts: { db?: Db } = {}) {
     if (![1, 2, 3].includes(body.strength)) return c.json({ error: "Invalid strength" }, 400);
 
     const state = await me(db, device);
-    if (body.strength > maxStrength(state.reads[id] ?? [])) return c.json({ error: "Read all perspectives to unlock stronger votes" }, 403);
+    const prot = (await protestRow(db, id))!;
+    if (body.strength > maxStrength(state.reads[id] ?? [], availableOf(prot.articles))) return c.json({ error: "Read every available perspective to unlock stronger votes" }, 403);
     const cost = voteCost(body.strength);
 
     // Atomic spend: only succeeds if today's remaining Voice covers the cost, even under concurrent requests.

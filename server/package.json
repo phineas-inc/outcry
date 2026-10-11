@@ -9,10 +9,11 @@
   "scripts": {
     "dev": "node --watch src/index.ts",
     "start": "node src/index.ts",
-    "test": "node --test test/api.test.ts",
-    "seed:sql": "node scripts/seed-sql.ts > seed.sql",
+    "test": "node --test test/api.test.ts test/ingest.test.ts",
+    "seed:sql": "node scripts/seed-sql.ts sample > seed.sql",
     "dev:worker": "npm run seed:sql && wrangler d1 execute outcry --local --file=seed.sql && wrangler dev --port 8788",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "migrate:live": "node scripts/seed-sql.ts live > migrate.sql && wrangler d1 execute outcry --remote --yes --file=migrate.sql"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.0",

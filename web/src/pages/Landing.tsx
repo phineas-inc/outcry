@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BiasBar } from "@/components/Bits";
-import { fmt } from "@/lib/format";
+import { fmt, placeOf } from "@/lib/format";
 import { useStore } from "@/lib/store";
 
 export default function Landing() {
-  const { protests, ready } = useStore();
+  const { protests, ready, status, mode } = useStore();
   useEffect(() => { document.title = "Outcry — See every side of every movement"; }, []);
   const featured = [...protests].sort((a, b) => b.coverage.sourceCount - a.coverage.sourceCount).slice(0, 3);
   const countries = new Set(protests.map((p) => p.country)).size;
-  const crowd = protests.reduce((a, p) => a + p.crowdEstimate, 0);
   return (
     <main className="landing">
       <section className="hero">
@@ -20,7 +19,7 @@ export default function Landing() {
         <dl className="hero-stats">
           <div><dt>Movements</dt><dd>{ready ? protests.length : "–"}</dd></div>
           <div><dt>Countries</dt><dd>{ready ? countries : "–"}</dd></div>
-          <div><dt>People on the streets</dt><dd>{ready ? fmt.format(crowd) : "–"}</dd></div>
+          <div><dt>{status ? "Articles tracked" : "Outlets"}</dt><dd>{ready ? (status ? fmt.format(status.articlesTracked) : new Set(protests.flatMap((p) => p.articles.map((a) => a.outlet))).size) : "–"}</dd></div>
         </dl>
       </section>
       <section className="steps">
@@ -29,10 +28,10 @@ export default function Landing() {
         <div><b>03</b><h3>Make your voice count</h3><p>Vote on the cause and the action with quadratic Voice. Read all sides to unlock stronger votes.</p></div>
       </section>
       {featured.length > 0 && <section className="featured">
-        <span className="eyebrow">Most covered right now (sample data)</span>
+        <span className="eyebrow">{mode === "live" ? "Most covered right now" : "Most covered right now (sample data)"}</span>
         {featured.map((p) => (
           <Link key={p.id} to={`/app/p/${p.id}`} className="feature-row">
-            <div><small>{p.city}, {p.country}</small><h3>{p.title}</h3></div><BiasBar protest={p} compact />
+            <div><small>{placeOf(p)}</small><h3>{p.title}</h3></div><BiasBar protest={p} compact />
           </Link>
         ))}
       </section>}

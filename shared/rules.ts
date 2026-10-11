@@ -10,8 +10,16 @@ export const LEVELS = ["Bystander", "Witness", "Correspondent", "Analyst", "Envo
 /** Quadratic voting: strength n costs n² Voice. */
 export const voteCost = (strength: number): number => strength * strength;
 
-/** Strength 1 always; strengths 2-3 unlock once all three perspectives are read. */
-export const maxStrength = (reads: readonly Lean[]): number => (LEANS.every((l) => reads.includes(l)) ? 3 : 1);
+/** Perspectives a story needs read to count as "all sides": every lean that has coverage, and at least two of them. */
+export const requiredLeans = (available: readonly Lean[]): Lean[] => LEANS.filter((l) => available.includes(l));
+
+export const sidesComplete = (reads: readonly Lean[], available: readonly Lean[]): boolean => {
+  const need = requiredLeans(available);
+  return need.length >= 2 && need.every((l) => reads.includes(l));
+};
+
+/** Strength 1 always; strengths 2-3 unlock once every available perspective (min. two) is read. */
+export const maxStrength = (reads: readonly Lean[], available: readonly Lean[] = LEANS): number => (sidesComplete(reads, available) ? 3 : 1);
 
 export const dayKey = (d = new Date()): string => d.toISOString().slice(0, 10);
 
@@ -23,7 +31,7 @@ export function nextStreak(streak: number, lastBridge: string | null, today: str
 
 export const levelOf = (xp: number) => Math.min(LEVELS.length - 1, Math.floor(xp / 100));
 
-export const isBlindspot = (c: { left: number; right: number }) => c.left < 10 || c.right < 10;
+export const isBlindspot = (c: { left: number; right: number; rated?: number }) => (c.rated ?? 99) >= 3 && (c.left < 10 || c.right < 10);
 
 export interface BadgeState { id: string; label: string; earned: boolean }
 
