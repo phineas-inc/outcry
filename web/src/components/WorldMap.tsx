@@ -3,8 +3,10 @@ import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import world from "world-atlas/countries-110m.json";
-import { fmt, placeOf } from "@/lib/format";
+import { fmt } from "@/lib/format";
+import { useI18n } from "@/lib/i18n";
 import type { Protest } from "@/lib/types";
+import { usePlace } from "./Bits";
 import Icon from "./Icon";
 
 const W = 1000, H = 500, MAX_K = 12;
@@ -19,6 +21,8 @@ interface View { k: number; x: number; y: number }
 interface Pt { p: Protest; x: number; y: number }
 
 export default function WorldMap({ protests, onOpen }: { protests: Protest[]; onOpen: (p: Protest) => void }) {
+  const { t } = useI18n();
+  const place = usePlace();
   const [view, setView] = useState<View>({ k: 1, x: 0, y: 0 });
   const [hover, setHover] = useState<{ p: Protest; left: number; top: number } | null>(null);
   const [sidebar, setSidebar] = useState(() => typeof window !== "undefined" && window.innerWidth > 720);
@@ -97,14 +101,14 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
   return (
     <div className="map-shell">
       <div className="map-stage" ref={stage}>
-        <svg ref={svg} className="world-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label="World map of protests"
+        <svg ref={svg} className="world-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label={t("map.aria")}
           onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
           <g transform={`translate(${view.x} ${view.y}) scale(${view.k})`}>
             <path d={spherePath} className="map-sphere" />
             <path d={landPath} className="map-land" style={{ strokeWidth: 0.6 * inv }} />
             {clusters.map((c) => c.items.length > 1 ? (
               <g key={c.items.map((i) => i.p.id).join()} className="cluster-g" transform={`translate(${c.x} ${c.y}) scale(${inv})`} tabIndex={0} role="button"
-                aria-label={`${c.items.length} movements, zoom in`} onClick={guard(() => zoomInto(c.x, c.y))}
+                aria-label={t("map.cluster", { n: c.items.length })} onClick={guard(() => zoomInto(c.x, c.y))}
                 onKeyDown={(e) => e.key === "Enter" && zoomInto(c.x, c.y)}>
                 <circle r="17" /><text textAnchor="middle" dy="6">{c.items.length}</text>
               </g>
@@ -121,21 +125,21 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
             })())}
           </g>
         </svg>
-        {hover && <div className="map-tooltip" style={{ left: hover.left, top: hover.top }}><span>{placeOf(hover.p)}</span><strong>{hover.p.title}</strong><small>{hover.p.crowdEstimate ? `${fmt.format(hover.p.crowdEstimate)} · ` : ""}{hover.p.status}</small></div>}
-        <div className="map-caption"><span className="live-dot" />Tracking {protests.length} movements</div>
+        {hover && <div className="map-tooltip" style={{ left: hover.left, top: hover.top }}><span>{place(hover.p)}</span><strong lang="en">{hover.p.title}</strong><small>{hover.p.crowdEstimate ? `${fmt.format(hover.p.crowdEstimate)} · ` : ""}{t(`status.${hover.p.status}` as "status.active")}</small></div>}
+        <div className="map-caption"><span className="live-dot" />{t("map.tracking", { n: protests.length })}</div>
         <div className="map-controls">
-          <button onClick={() => zoomAt(1.6)} aria-label="Zoom in"><Icon name="plus" /></button>
-          <button onClick={() => zoomAt(1 / 1.6)} aria-label="Zoom out"><Icon name="minus" /></button>
+          <button onClick={() => zoomAt(1.6)} aria-label={t("map.zoomIn")}><Icon name="plus" /></button>
+          <button onClick={() => zoomAt(1 / 1.6)} aria-label={t("map.zoomOut")}><Icon name="minus" /></button>
         </div>
       </div>
       <aside className={`map-sidebar ${sidebar ? "" : "collapsed"}`}>
-        <button className="sidebar-toggle" onClick={() => setSidebar(!sidebar)} aria-label="Toggle movement list" aria-expanded={sidebar}><Icon name={sidebar ? "arrow" : "list"} /></button>
+        <button className="sidebar-toggle" onClick={() => setSidebar(!sidebar)} aria-label={t("map.toggle")} aria-expanded={sidebar}><Icon name={sidebar ? "arrow" : "list"} /></button>
         {sidebar && <>
-          <div className="map-sidebar-head"><span className="eyebrow">In map area</span><strong>{protests.length} movements</strong></div>
+          <div className="map-sidebar-head"><span className="eyebrow">{t("map.inArea")}</span><strong>{t("filters.count", { n: protests.length })}</strong></div>
           <div className="map-list">{protests.map((p) => (
             <button key={p.id} onClick={() => onOpen(p)}>
               <span className={`map-list-dot ${p.status.replace(" ", "-")}`} />
-              <span><strong>{p.title}</strong><small>{p.city === p.country ? "Nationwide" : p.city}{p.crowdEstimate ? ` · ${fmt.format(p.crowdEstimate)}` : ""}</small></span>
+              <span><strong lang="en">{p.title}</strong><small>{p.city === p.country ? t("place.nationwideShort") : p.city}{p.crowdEstimate ? ` · ${fmt.format(p.crowdEstimate)}` : ""}</small></span>
               <Icon name="arrow" size={14} />
             </button>
           ))}</div>

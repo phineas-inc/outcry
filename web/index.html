@@ -3,7 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#0d0e0e" />
+    <meta name="theme-color" content="#0d0e0e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)" />
+    <script>
+      // Apply the saved theme before first paint to avoid a flash.
+      try { var t = localStorage.getItem("outcry.theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+      try { var l = localStorage.getItem("outcry.lang") || (navigator.language || "en"); document.documentElement.lang = l.slice(0, 2) === "de" ? "de" : "en"; } catch (e) {}
+    </script>
     <meta name="description" content="Outcry tracks protests worldwide, shows how the media spectrum covers them, and lets you weigh in with a daily budget of Voice." />
     <meta property="og:title" content="Outcry — See every side of every movement" />
     <meta property="og:description" content="A live protest desk with coverage across the spectrum." />

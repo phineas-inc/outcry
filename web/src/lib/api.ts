@@ -10,6 +10,8 @@ export interface Api {
   protests(): Promise<Protest[]>;
   status(): Promise<PipelineStatus | null>;
   me(): Promise<Me>;
+  /** Deletes this device's server-side data (GDPR erasure); offline mode clears local progress. */
+  erase(): Promise<void>;
   read(id: string, lean: Lean): Promise<Me>;
   vote(id: string, kind: VoteKind, direction: 1 | -1, strength: 1 | 2 | 3): Promise<{ me: Me; protest?: Protest }>;
 }
@@ -30,9 +32,9 @@ export function deviceId(): string {
 
 // ---------- live (HTTP) ----------
 function live(): Api {
-  const call = async <T,>(path: string, body?: unknown): Promise<T> => {
+  const call = async <T,>(path: string, body?: unknown, method = body ? "POST" : "GET"): Promise<T> => {
     const res = await fetch(`${API_URL}${path}`, {
-      method: body ? "POST" : "GET",
+      method,
       headers: { "X-Device-Id": deviceId(), ...(body ? { "Content-Type": "application/json" } : {}) },
       body: body ? JSON.stringify(body) : undefined,
     });
@@ -44,6 +46,7 @@ function live(): Api {
     protests: () => call("/api/protests"),
     status: () => call<PipelineStatus>("/api/status").catch(() => null),
     me: () => call("/api/me"),
+    erase: async () => { await call("/api/me", undefined, "DELETE"); },
     read: (id, lean) => call(`/api/protests/${id}/reads`, { lean }),
     vote: (id, kind, direction, strength) => call(`/api/protests/${id}/votes`, { kind, direction, strength }),
   };
@@ -82,6 +85,7 @@ function offline(): Api {
     mode: "offline",
     protests: async () => withVotes(loadLocal()),
     status: async () => null,
+    erase: async () => { try { storage?.removeItem(KEY); } catch { /* ignore */ } memory.delete(KEY); },
     me: async () => toMe(loadLocal()),
     read: async (id, lean) => {
       const s = loadLocal();
@@ -100,8 +104,8 @@ function offline(): Api {
       const s = loadLocal();
       const today = dayKey();
       if (s.spentDay !== today) { s.spentDay = today; s.spent = 0; }
-      if (strength > maxStrength(s.reads[id] ?? [])) throw new Error("Read all perspectives to unlock stronger votes");
-      if (voteCost(strength) > MAX_VOICE - s.spent) throw new Error("Not enough Voice left today");
+      if (strength > maxStrength(s.reads[id] ?? [])) throw Object.assign(new Error("locked"), { status: 403 });
+      if (voteCost(strength) > MAX_VOICE - s.spent) throw Object.assign(new Error("no voice"), { status: 402 });
       s.spent += voteCost(strength);
       const cur = s.votes[id] ?? { cause: 0, action: 0 };
       s.votes[id] = { ...cur, [kind]: cur[kind] + direction * strength };

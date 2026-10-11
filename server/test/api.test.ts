@@ -38,3 +38,15 @@ test("concurrent votes cannot overspend the daily Voice budget", async () => {
   const me = await (await app.request("/api/me", { headers: H2 })).json();
   assert.equal(me.credits, 2);
 });
+
+test("DELETE /api/me erases a device's votes, reads and progress", async () => {
+  const D = { "X-Device-Id": "erase-device-0123456789", "Content-Type": "application/json" };
+  for (const lean of ["Left", "Center", "Right"]) await app.request("/api/protests/tokyo-peace/reads", { method: "POST", headers: D, body: JSON.stringify({ lean }) });
+  await app.request("/api/protests/tokyo-peace/votes", { method: "POST", headers: D, body: JSON.stringify({ kind: "cause", direction: 1, strength: 1 }) });
+  const before = await (await app.request("/api/me", { headers: D })).json();
+  assert.equal(before.xp, 35);
+  assert.equal((await app.request("/api/me", { method: "DELETE", headers: D })).status, 200);
+  const after = await (await app.request("/api/me", { headers: D })).json();
+  assert.deepEqual([after.xp, after.credits, Object.keys(after.votes).length, Object.keys(after.reads).length], [0, 10, 0, 0]);
+  assert.equal((await app.request("/api/me", { method: "DELETE" })).status, 400);
+});

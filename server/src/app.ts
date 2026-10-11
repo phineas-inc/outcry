@@ -135,6 +135,15 @@ export function createApp(opts: { db?: Db } = {}) {
     return device ? c.json(await me(c.var.db, device)) : noDevice(c);
   });
 
+  // GDPR erasure: removes everything held for this device (votes, reads, progress, identifier).
+  app.delete("/api/me", async (c) => {
+    const device = deviceOf(c);
+    if (!device) return noDevice(c);
+    const db = c.var.db;
+    await db.batch([["DELETE FROM votes WHERE device = ?", device], ["DELETE FROM reads WHERE device = ?", device], ["DELETE FROM devices WHERE id = ?", device]]);
+    return c.json({ deleted: true });
+  });
+
   app.post("/api/protests/:id/reads", async (c) => {
     const db = c.var.db;
     const device = deviceOf(c);
