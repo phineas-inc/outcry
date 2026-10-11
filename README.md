@@ -22,7 +22,7 @@ Nothing is scraped from article pages; only headlines and links from feeds publi
 
 | Path | What |
 | --- | --- |
-| `web/` | React 19 + Vite + Tailwind website (landing, explore list/map, protest pages, profile, how-it-works, privacy). Responsive down to phones. |
+| `web/` | React 19 + Vite + Tailwind website. The home page is the world map; `/feed` is the list; `/p/:id` and `/feed/p/:id` are shareable protest links; `/about` explains Outcry and how it works; `/me`, `/privacy`, `/accessibility`. English and German, light and dark, responsive down to 320 px. |
 | `server/` | Hono API for Cloudflare Workers + D1, or Node 24 + SQLite. Anonymous device identity, server-enforced Voice budget, read-to-unlock rule. |
 | `shared/` | Game rules (`rules.ts`) and seed data used by both. |
 

@@ -39,11 +39,11 @@ export default function Profile() {
       <h2 className="sub">{t("me.badges")}</h2>
       <div className="badges">{me.badges.map((b) => <span key={b.id} className={b.earned ? "" : "locked"}>{t(`badge.${b.id}` as Key)}</span>)}</div>
       <h2 className="sub">{t("me.history")}</h2>
-      {voted.length === 0 ? <p className="muted">{t("me.noVotes")} <Link to="/app">{t("me.find")}</Link> {t("me.noVotes2")}</p> : (
+      {voted.length === 0 ? <p className="muted">{t("me.noVotes")} <Link to="/">{t("me.find")}</Link> {t("me.noVotes2")}</p> : (
         <ul className="history-list">
           {voted.map((id) => {
             const p = protests.find((x) => x.id === id); const v = me.votes[id];
-            return p && <li key={id}><Link className="history-link" to={`/app/p/${id}`}><strong lang="en">{p.title}</strong><small>{p.city} · {t("me.cause")} {v.cause > 0 ? "+" : ""}{v.cause} · {t("me.action")} {v.action > 0 ? "+" : ""}{v.action}</small></Link></li>;
+            return p && <li key={id}><Link className="history-link" to={`/p/${id}`}><strong lang="en">{p.title}</strong><small>{p.city} · {t("me.cause")} {v.cause > 0 ? "+" : ""}{v.cause} · {t("me.action")} {v.action > 0 ? "+" : ""}{v.action}</small></Link></li>;
           })}
         </ul>
       )}

@@ -60,6 +60,16 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
     return [(clientX - r.left - (r.width - W * s) / 2) / s, (clientY - r.top - (r.height - H * s) / 2) / s];
   };
 
+  // On a tall (phone) stage the whole world would be a thin strip, so start zoomed in on the populated band.
+  useEffect(() => {
+    const r = stage.current?.getBoundingClientRect();
+    if (!r || r.width === 0 || r.height / r.width < 0.7) return;
+    const k = Math.min(3, Math.max(1, 1.8 * (r.height / r.width)));
+    const c = projection([15, 25]);
+    if (c) setView(clamp({ k, x: W / 2 - c[0] * k, y: H / 2 - c[1] * k }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     const el = svg.current;
     if (!el) return;
@@ -99,7 +109,7 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
 
   const inv = 1 / view.k;
   return (
-    <div className="map-shell">
+    <div className={`map-shell ${sidebar ? "" : "no-side"}`}>
       <div className="map-stage" ref={stage}>
         <svg ref={svg} className="world-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label={t("map.aria")}
           onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>

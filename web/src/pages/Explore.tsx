@@ -15,7 +15,7 @@ const topics: Topic[] = ["labor", "climate", "democracy", "rights", "economy", "
 const statuses: Status[] = ["active", "escalating", "winding down"];
 const initial = { region: "all", topic: "all", size: "all", status: "all", lean: "all" };
 
-export default function Explore() {
+export default function Explore({ view }: { view: "map" | "list" }) {
   const { protests, ready, mode, status } = useStore();
   const { t } = useI18n();
   const [params] = useSearchParams();
@@ -24,7 +24,6 @@ export default function Explore() {
   const [sort, setSort] = useState<Sort>("trending");
   const [f, setF] = useState(initial);
   const q = (params.get("q") ?? "").toLowerCase();
-  const view = params.get("view") === "map" ? "map" : "list";
   const selected = protests.find((p) => p.id === id) ?? null;
   const regions = useMemo(() => [...new Set(protests.map((p) => p.continent))].sort(), [protests]);
 
@@ -48,8 +47,9 @@ export default function Explore() {
     return [...out].sort(by[sort]);
   }, [protests, q, f, sort]);
 
-  const open = (p: Protest) => navigate({ pathname: `/app/p/${p.id}`, search: params.toString() });
-  const close = () => navigate({ pathname: "/app", search: params.toString() });
+  const base = view === "list" ? "/feed" : "";
+  const open = (p: Protest) => navigate({ pathname: `${base}/p/${p.id}`, search: params.toString() });
+  const close = () => navigate({ pathname: base || "/", search: params.toString() });
   const select = (key: keyof typeof initial, label: string, options: [string, string][]) => (
     <label><span>{label}</span>
       <select value={f[key]} onChange={(e) => setF({ ...f, [key]: e.target.value })}>{options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select>

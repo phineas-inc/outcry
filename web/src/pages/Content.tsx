@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Rich, useI18n } from "@/lib/i18n";
 
-function DocPage({ name, cta }: { name: "method" | "privacy" | "accessibility"; cta?: boolean }) {
+function DocPage({ name, cta }: { name: "privacy" | "accessibility"; cta?: boolean }) {
   const { page, t } = useI18n();
   const doc = page(name);
   useEffect(() => { document.title = `${doc.eyebrow} — Outcry`; }, [doc.eyebrow]);
@@ -21,6 +21,5 @@ function DocPage({ name, cta }: { name: "method" | "privacy" | "accessibility"; 
   );
 }
 
-export const Method = () => <DocPage name="method" cta />;
 export const Privacy = () => <DocPage name="privacy" />;
 export const Accessibility = () => <DocPage name="accessibility" />;
