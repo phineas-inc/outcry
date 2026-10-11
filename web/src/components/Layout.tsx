@@ -85,7 +85,6 @@ export default function Layout() {
         <Link className={onMap ? "on" : ""} aria-current={onMap ? "page" : undefined} to={{ pathname: "/", search: keepQ }}><Icon name="map" /><span>{t("tab.map")}</span></Link>
         <Link className={onFeed ? "on" : ""} aria-current={onFeed ? "page" : undefined} to={{ pathname: "/feed", search: keepQ }}><Icon name="list" /><span>{t("tab.feed")}</span></Link>
         <Link className={pathname === "/about" ? "on" : ""} aria-current={pathname === "/about" ? "page" : undefined} to="/about"><Icon name="info" /><span>{t("tab.about")}</span></Link>
-        <Link className={pathname === "/me" ? "on" : ""} aria-current={pathname === "/me" ? "page" : undefined} to="/me"><Icon name="user" /><span>{t("tab.you")}</span></Link>
       </nav>
     </div>
   );
