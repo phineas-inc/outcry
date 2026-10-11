@@ -1,0 +1,1502 @@
+[
+  {
+    "id": "seoul-climate",
+    "title": "Students demand a binding climate budget",
+    "summary": "University coalitions are calling for legally binding emissions targets and a larger public transit budget.",
+    "city": "Seoul",
+    "country": "South Korea",
+    "continent": "Asia",
+    "lat": 37.57,
+    "lng": 126.98,
+    "crowdEstimate": 42000,
+    "topic": "climate",
+    "status": "active",
+    "coverage": {
+      "left": 46,
+      "center": 31,
+      "right": 23,
+      "sourceCount": 58
+    },
+    "causeScore": 1842,
+    "actionScore": 1211,
+    "daysAgo": 7,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Students demand a binding climate budget: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in South Korea",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Seoul",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in South Korea",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Seoul officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in South Korea",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "paris-pensions",
+    "title": "Rail workers renew pensions strike",
+    "summary": "Rail unions have begun rolling stoppages over retirement provisions and staffing guarantees.",
+    "city": "Paris",
+    "country": "France",
+    "continent": "Europe",
+    "lat": 48.86,
+    "lng": 2.35,
+    "crowdEstimate": 87000,
+    "topic": "labor",
+    "status": "escalating",
+    "coverage": {
+      "left": 54,
+      "center": 34,
+      "right": 12,
+      "sourceCount": 96
+    },
+    "causeScore": 3220,
+    "actionScore": 2118,
+    "daysAgo": 4,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Rail workers renew pensions strike: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in France",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Paris",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in France",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Paris officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in France",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "nairobi-tax",
+    "title": "Youth march against new finance bill",
+    "summary": "Organizers are demanding the withdrawal of consumption tax increases and greater budget transparency.",
+    "city": "Nairobi",
+    "country": "Kenya",
+    "continent": "Africa",
+    "lat": -1.29,
+    "lng": 36.82,
+    "crowdEstimate": 31000,
+    "topic": "economy",
+    "status": "escalating",
+    "coverage": {
+      "left": 39,
+      "center": 48,
+      "right": 13,
+      "sourceCount": 42
+    },
+    "causeScore": 2410,
+    "actionScore": 1889,
+    "daysAgo": 2,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Youth march against new finance bill: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Kenya",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Nairobi",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Kenya",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Nairobi officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Kenya",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "buenos-labor",
+    "title": "Teachers rally for inflation-linked pay",
+    "summary": "Public-school teachers are seeking automatic salary adjustments and protected classroom funding.",
+    "city": "Buenos Aires",
+    "country": "Argentina",
+    "continent": "South America",
+    "lat": -34.6,
+    "lng": -58.38,
+    "crowdEstimate": 56000,
+    "topic": "labor",
+    "status": "active",
+    "coverage": {
+      "left": 61,
+      "center": 32,
+      "right": 7,
+      "sourceCount": 37
+    },
+    "causeScore": 2750,
+    "actionScore": 1680,
+    "daysAgo": 11,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Teachers rally for inflation-linked pay: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Argentina",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Buenos Aires",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Argentina",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Buenos Aires officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Argentina",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "nyc-housing",
+    "title": "Tenants call for a citywide rent freeze",
+    "summary": "Tenant groups are gathering ahead of a decisive rent guidelines vote.",
+    "city": "New York",
+    "country": "United States",
+    "continent": "North America",
+    "lat": 40.71,
+    "lng": -74.01,
+    "crowdEstimate": 18500,
+    "topic": "rights",
+    "status": "active",
+    "coverage": {
+      "left": 49,
+      "center": 26,
+      "right": 25,
+      "sourceCount": 81
+    },
+    "causeScore": 1388,
+    "actionScore": 904,
+    "daysAgo": 3,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Tenants call for a citywide rent freeze: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in United States",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in New York",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in United States",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "New York officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in United States",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "melbourne-campus",
+    "title": "Universities face nationwide walkout",
+    "summary": "Staff and students are protesting job cuts and proposed caps on research funding.",
+    "city": "Melbourne",
+    "country": "Australia",
+    "continent": "Oceania",
+    "lat": -37.81,
+    "lng": 144.96,
+    "crowdEstimate": 24000,
+    "topic": "labor",
+    "status": "active",
+    "coverage": {
+      "left": 45,
+      "center": 45,
+      "right": 10,
+      "sourceCount": 29
+    },
+    "causeScore": 992,
+    "actionScore": 741,
+    "daysAgo": 6,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Universities face nationwide walkout: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Australia",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Melbourne",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Australia",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Melbourne officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Australia",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "tbilisi-democracy",
+    "title": "Nightly vigils defend judicial independence",
+    "summary": "Civil society groups are holding peaceful vigils against proposed changes to judicial appointments.",
+    "city": "Tbilisi",
+    "country": "Georgia",
+    "continent": "Asia",
+    "lat": 41.72,
+    "lng": 44.79,
+    "crowdEstimate": 39000,
+    "topic": "democracy",
+    "status": "active",
+    "coverage": {
+      "left": 35,
+      "center": 58,
+      "right": 7,
+      "sourceCount": 44
+    },
+    "causeScore": 3021,
+    "actionScore": 2804,
+    "daysAgo": 17,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Nightly vigils defend judicial independence: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Georgia",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Tbilisi",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Georgia",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Tbilisi officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Georgia",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "london-water",
+    "title": "Marchers demand action on river pollution",
+    "summary": "A coalition of anglers, swimmers and conservation groups is calling for tougher water regulation.",
+    "city": "London",
+    "country": "United Kingdom",
+    "continent": "Europe",
+    "lat": 51.51,
+    "lng": -0.13,
+    "crowdEstimate": 22000,
+    "topic": "climate",
+    "status": "winding down",
+    "coverage": {
+      "left": 43,
+      "center": 42,
+      "right": 15,
+      "sourceCount": 63
+    },
+    "causeScore": 1770,
+    "actionScore": 1512,
+    "daysAgo": 5,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Marchers demand action on river pollution: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in United Kingdom",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in London",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in United Kingdom",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "London officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in United Kingdom",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "delhi-farmers",
+    "title": "Farmers return to capital border",
+    "summary": "Farm unions are seeking minimum price guarantees and relief from agricultural debt.",
+    "city": "New Delhi",
+    "country": "India",
+    "continent": "Asia",
+    "lat": 28.61,
+    "lng": 77.21,
+    "crowdEstimate": 125000,
+    "topic": "economy",
+    "status": "escalating",
+    "coverage": {
+      "left": 41,
+      "center": 37,
+      "right": 22,
+      "sourceCount": 112
+    },
+    "causeScore": 4892,
+    "actionScore": 3010,
+    "daysAgo": 15,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Farmers return to capital border: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in India",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in New Delhi",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in India",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "New Delhi officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in India",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "toronto-health",
+    "title": "Nurses rally over hospital staffing",
+    "summary": "Nurses are asking the province for enforceable patient-to-staff ratios and safer night shifts.",
+    "city": "Toronto",
+    "country": "Canada",
+    "continent": "North America",
+    "lat": 43.65,
+    "lng": -79.38,
+    "crowdEstimate": 9500,
+    "topic": "labor",
+    "status": "active",
+    "coverage": {
+      "left": 52,
+      "center": 39,
+      "right": 9,
+      "sourceCount": 34
+    },
+    "causeScore": 1214,
+    "actionScore": 1108,
+    "daysAgo": 1,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Nurses rally over hospital staffing: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Canada",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Toronto",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Canada",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Toronto officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Canada",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "lagos-power",
+    "title": "Residents protest prolonged power cuts",
+    "summary": "Neighborhood associations are demanding a billing audit after weeks of unreliable electricity.",
+    "city": "Lagos",
+    "country": "Nigeria",
+    "continent": "Africa",
+    "lat": 6.52,
+    "lng": 3.38,
+    "crowdEstimate": 14000,
+    "topic": "economy",
+    "status": "active",
+    "coverage": {
+      "left": 26,
+      "center": 62,
+      "right": 12,
+      "sourceCount": 21
+    },
+    "causeScore": 828,
+    "actionScore": 602,
+    "daysAgo": 2,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Residents protest prolonged power cuts: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Nigeria",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Lagos",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Nigeria",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Lagos officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Nigeria",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "santiago-water",
+    "title": "Communities march for public water rights",
+    "summary": "Rural and urban organizers seek stronger public control over water access during a severe drought.",
+    "city": "Santiago",
+    "country": "Chile",
+    "continent": "South America",
+    "lat": -33.45,
+    "lng": -70.67,
+    "crowdEstimate": 33000,
+    "topic": "climate",
+    "status": "active",
+    "coverage": {
+      "left": 58,
+      "center": 34,
+      "right": 8,
+      "sourceCount": 47
+    },
+    "causeScore": 2133,
+    "actionScore": 1505,
+    "daysAgo": 8,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Communities march for public water rights: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Chile",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Santiago",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Chile",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Santiago officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Chile",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "warsaw-media",
+    "title": "Crowds defend independent public media",
+    "summary": "Journalists and viewers are calling for transparent appointments and stable public broadcasting funds.",
+    "city": "Warsaw",
+    "country": "Poland",
+    "continent": "Europe",
+    "lat": 52.23,
+    "lng": 21.01,
+    "crowdEstimate": 27000,
+    "topic": "democracy",
+    "status": "winding down",
+    "coverage": {
+      "left": 31,
+      "center": 40,
+      "right": 29,
+      "sourceCount": 73
+    },
+    "causeScore": 1467,
+    "actionScore": 1302,
+    "daysAgo": 10,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Crowds defend independent public media: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Poland",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Warsaw",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Poland",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Warsaw officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Poland",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "jakarta-gig",
+    "title": "Gig workers demand basic protections",
+    "summary": "Delivery and ride-hailing workers seek accident insurance, transparent algorithms and collective bargaining.",
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "continent": "Asia",
+    "lat": -6.21,
+    "lng": 106.85,
+    "crowdEstimate": 44000,
+    "topic": "labor",
+    "status": "escalating",
+    "coverage": {
+      "left": 47,
+      "center": 44,
+      "right": 9,
+      "sourceCount": 39
+    },
+    "causeScore": 1988,
+    "actionScore": 1421,
+    "daysAgo": 4,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Gig workers demand basic protections: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Indonesia",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Jakarta",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Indonesia",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Jakarta officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Indonesia",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "mexico-missing",
+    "title": "Families march for the disappeared",
+    "summary": "Families are demanding expanded forensic resources and faster investigation of missing-person cases.",
+    "city": "Mexico City",
+    "country": "Mexico",
+    "continent": "North America",
+    "lat": 19.43,
+    "lng": -99.13,
+    "crowdEstimate": 36000,
+    "topic": "rights",
+    "status": "active",
+    "coverage": {
+      "left": 44,
+      "center": 50,
+      "right": 6,
+      "sourceCount": 52
+    },
+    "causeScore": 3450,
+    "actionScore": 3177,
+    "daysAgo": 9,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Families march for the disappeared: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Mexico",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Mexico City",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Mexico",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Mexico City officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Mexico",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "cape-town-housing",
+    "title": "Residents occupy square over housing wait",
+    "summary": "Residents from several townships want publication of housing lists and faster serviced-land delivery.",
+    "city": "Cape Town",
+    "country": "South Africa",
+    "continent": "Africa",
+    "lat": -33.92,
+    "lng": 18.42,
+    "crowdEstimate": 11500,
+    "topic": "rights",
+    "status": "active",
+    "coverage": {
+      "left": 57,
+      "center": 38,
+      "right": 5,
+      "sourceCount": 28
+    },
+    "causeScore": 901,
+    "actionScore": 488,
+    "daysAgo": 12,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Residents occupy square over housing wait: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in South Africa",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Cape Town",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in South Africa",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Cape Town officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in South Africa",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "berlin-rent",
+    "title": "Rent cap campaign fills Alexanderplatz",
+    "summary": "Housing advocates are pushing for a renewed cap and accelerated social housing construction.",
+    "city": "Berlin",
+    "country": "Germany",
+    "continent": "Europe",
+    "lat": 52.52,
+    "lng": 13.4,
+    "crowdEstimate": 48000,
+    "topic": "economy",
+    "status": "active",
+    "coverage": {
+      "left": 51,
+      "center": 36,
+      "right": 13,
+      "sourceCount": 67
+    },
+    "causeScore": 2301,
+    "actionScore": 1708,
+    "daysAgo": 3,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Rent cap campaign fills Alexanderplatz: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Germany",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Berlin",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Germany",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Berlin officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Germany",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "tokyo-peace",
+    "title": "Peace groups oppose defense expansion",
+    "summary": "Organizers are urging lawmakers to redirect planned defense spending toward social services.",
+    "city": "Tokyo",
+    "country": "Japan",
+    "continent": "Asia",
+    "lat": 35.68,
+    "lng": 139.69,
+    "crowdEstimate": 16000,
+    "topic": "other",
+    "status": "winding down",
+    "coverage": {
+      "left": 33,
+      "center": 52,
+      "right": 15,
+      "sourceCount": 46
+    },
+    "causeScore": 722,
+    "actionScore": 810,
+    "daysAgo": 7,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Peace groups oppose defense expansion: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Japan",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Tokyo",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Japan",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Tokyo officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Japan",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "rio-transit",
+    "title": "Commuters protest fare increase",
+    "summary": "Student and neighborhood groups are calling for the cancellation of a new bus fare increase.",
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "continent": "South America",
+    "lat": -22.91,
+    "lng": -43.17,
+    "crowdEstimate": 28000,
+    "topic": "economy",
+    "status": "escalating",
+    "coverage": {
+      "left": 55,
+      "center": 30,
+      "right": 15,
+      "sourceCount": 55
+    },
+    "causeScore": 1640,
+    "actionScore": 1044,
+    "daysAgo": 2,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Commuters protest fare increase: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Brazil",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Rio de Janeiro",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Brazil",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Rio de Janeiro officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Brazil",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "madrid-tourism",
+    "title": "Residents call for limits on holiday lets",
+    "summary": "Neighborhood groups say short-term rentals are hollowing out central districts and pushing up rents.",
+    "city": "Madrid",
+    "country": "Spain",
+    "continent": "Europe",
+    "lat": 40.42,
+    "lng": -3.7,
+    "crowdEstimate": 52000,
+    "topic": "economy",
+    "status": "active",
+    "coverage": {
+      "left": 48,
+      "center": 41,
+      "right": 11,
+      "sourceCount": 71
+    },
+    "causeScore": 2830,
+    "actionScore": 1934,
+    "daysAgo": 5,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Residents call for limits on holiday lets: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Spain",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Madrid",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Spain",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Madrid officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Spain",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "manila-press",
+    "title": "Journalists march for press freedom",
+    "summary": "Newsrooms and student journalists seek stronger legal safeguards against harassment and surveillance.",
+    "city": "Manila",
+    "country": "Philippines",
+    "continent": "Asia",
+    "lat": 14.6,
+    "lng": 120.98,
+    "crowdEstimate": 12500,
+    "topic": "democracy",
+    "status": "active",
+    "coverage": {
+      "left": 42,
+      "center": 51,
+      "right": 7,
+      "sourceCount": 31
+    },
+    "causeScore": 1322,
+    "actionScore": 1288,
+    "daysAgo": 1,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Journalists march for press freedom: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Philippines",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Manila",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Philippines",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Manila officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Philippines",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "auckland-maori",
+    "title": "Hīkoi advances Indigenous rights",
+    "summary": "A cross-country march is opposing changes to treaty interpretation and Māori public services.",
+    "city": "Auckland",
+    "country": "New Zealand",
+    "continent": "Oceania",
+    "lat": -36.85,
+    "lng": 174.76,
+    "crowdEstimate": 76000,
+    "topic": "rights",
+    "status": "active",
+    "coverage": {
+      "left": 53,
+      "center": 39,
+      "right": 8,
+      "sourceCount": 64
+    },
+    "causeScore": 4110,
+    "actionScore": 3588,
+    "daysAgo": 14,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Hīkoi advances Indigenous rights: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in New Zealand",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Auckland",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in New Zealand",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Auckland officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in New Zealand",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "chicago-food",
+    "title": "Warehouse workers seek heat protections",
+    "summary": "Workers are asking major distributors for heat standards, guaranteed breaks and hazard pay.",
+    "city": "Chicago",
+    "country": "United States",
+    "continent": "North America",
+    "lat": 41.88,
+    "lng": -87.63,
+    "crowdEstimate": 7200,
+    "topic": "labor",
+    "status": "active",
+    "coverage": {
+      "left": 62,
+      "center": 30,
+      "right": 8,
+      "sourceCount": 25
+    },
+    "causeScore": 688,
+    "actionScore": 504,
+    "daysAgo": 6,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Warehouse workers seek heat protections: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in United States",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Chicago",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in United States",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Chicago officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in United States",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "cairo-bread",
+    "title": "Families call for bread subsidy protection",
+    "summary": "Community organizers are asking officials to preserve staple subsidies amid rising living costs.",
+    "city": "Cairo",
+    "country": "Egypt",
+    "continent": "Africa",
+    "lat": 30.04,
+    "lng": 31.24,
+    "crowdEstimate": 19500,
+    "topic": "economy",
+    "status": "winding down",
+    "coverage": {
+      "left": 28,
+      "center": 65,
+      "right": 7,
+      "sourceCount": 19
+    },
+    "causeScore": 990,
+    "actionScore": 611,
+    "daysAgo": 13,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Families call for bread subsidy protection: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Egypt",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in Cairo",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Egypt",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "Cairo officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Egypt",
+        "hoursAgo": 7
+      }
+    ]
+  },
+  {
+    "id": "mcmurdo-climate",
+    "title": "Researchers stage climate data vigil",
+    "summary": "Polar researchers are holding a small vigil for open climate data and long-term Antarctic monitoring.",
+    "city": "McMurdo Station",
+    "country": "Antarctica",
+    "continent": "Antarctica",
+    "lat": -77.85,
+    "lng": 166.67,
+    "crowdEstimate": 180,
+    "topic": "climate",
+    "status": "active",
+    "coverage": {
+      "left": 37,
+      "center": 59,
+      "right": 4,
+      "sourceCount": 14
+    },
+    "causeScore": 420,
+    "actionScore": 398,
+    "daysAgo": 3,
+    "articles": [
+      {
+        "outlet": "The Daily Commons",
+        "lean": "Left",
+        "headline": "Researchers stage climate data vigil: organizers say the movement is growing",
+        "hoursAgo": 0
+      },
+      {
+        "outlet": "Lantern Review",
+        "lean": "Left",
+        "headline": "Explainer: the demands, response and next steps in Antarctica",
+        "hoursAgo": 3
+      },
+      {
+        "outlet": "Meridian Wire",
+        "lean": "Center",
+        "headline": "What we know about the demonstrations in McMurdo Station",
+        "hoursAgo": 2
+      },
+      {
+        "outlet": "The Civic Ledger",
+        "lean": "Center",
+        "headline": "Explainer: the demands, response and next steps in Antarctica",
+        "hoursAgo": 5
+      },
+      {
+        "outlet": "The Standard Bearer",
+        "lean": "Right",
+        "headline": "McMurdo Station officials respond as disruption continues",
+        "hoursAgo": 4
+      },
+      {
+        "outlet": "Northgate Courier",
+        "lean": "Right",
+        "headline": "Explainer: the demands, response and next steps in Antarctica",
+        "hoursAgo": 7
+      }
+    ]
+  }
+]
