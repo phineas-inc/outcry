@@ -11,7 +11,7 @@ Website: https://tahire29-spec.github.io/outcry/
 | Path | What |
 | --- | --- |
 | `web/` | React 19 + Vite + Tailwind website (landing, explore list/map, protest pages, profile, how-it-works, privacy). Responsive down to phones. |
-| `server/` | Hono + SQLite API (Node 24, no native deps). Anonymous device identity, server-enforced Voice budget, read-to-unlock rule. |
+| `server/` | Hono API for Cloudflare Workers + D1, or Node 24 + SQLite. Anonymous device identity, server-enforced Voice budget, read-to-unlock rule. |
 | `shared/` | Game rules (`rules.ts`) and seed data used by both. |
 
 The site talks to the API when `VITE_API_URL` is set and reachable; otherwise it runs **offline** with the same rules, storing progress in the browser.
@@ -25,11 +25,23 @@ cd web && npm install && npm run dev         # site on :5173, proxies /api to :8
 
 Tests: `cd server && npm test`.
 
-## Deploy
+## Deploy (free)
 
 **Website** deploys to GitHub Pages on every push to `main` (`.github/workflows/pages.yml`). To point it at your API, set a repository variable `API_URL` (Settings → Secrets and variables → Actions → Variables) and re-run the workflow.
 
-**API** is a container (`server/Dockerfile`, build context = repo root). `render.yaml` is a Render blueprint; any Docker host works. Env: `PORT`, `DB_PATH` (default `/data/outcry.db`, mount a persistent volume), `ALLOWED_ORIGINS` (comma-separated site origins, default `*`), `RATE_LIMIT` (requests/min/IP, default 240).
+**API** runs on Cloudflare Workers + D1 (free plan, no card, always on):
+
+```bash
+cd server && npm install
+npx wrangler login
+npx wrangler d1 create outcry          # copy the database_id into wrangler.toml
+npm run seed:sql && npx wrangler d1 execute outcry --remote --file=seed.sql
+npm run deploy                         # prints https://outcry-api.<you>.workers.dev
+```
+
+Then set the repo variable `API_URL` to that URL. Local Workers dev: `npm run dev:worker` (local D1, port 8788). `ALLOWED_ORIGINS` in `wrangler.toml` limits which sites may call the API.
+
+The same code also runs on plain Node + SQLite (`npm run dev`, or `server/Dockerfile` with build context = repo root) for self-hosting.
 
 ## API
 

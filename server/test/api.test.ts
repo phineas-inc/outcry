@@ -1,9 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createApp } from "../src/app.ts";
-import { openDb } from "../src/db.ts";
+import { openNodeDb } from "../src/db.ts";
 
-const app = createApp(openDb(":memory:"));
+const app = createApp({ db: openNodeDb(":memory:") });
 const H = { "X-Device-Id": "test-device-0123456789", "Content-Type": "application/json" };
 const post = (path: string, body: unknown) => app.request(path, { method: "POST", headers: H, body: JSON.stringify(body) });
 
@@ -27,4 +27,14 @@ test("rejects strong votes until all perspectives are read, then charges n² Voi
 
 test("requires a device id", async () => {
   assert.equal((await app.request("/api/me")).status, 400);
+});
+
+test("concurrent votes cannot overspend the daily Voice budget", async () => {
+  const H2 = { "X-Device-Id": "race-device-0123456789", "Content-Type": "application/json" };
+  const id = "berlin-rent";
+  for (const lean of ["Left", "Center", "Right"]) await app.request(`/api/protests/${id}/reads`, { method: "POST", headers: H2, body: JSON.stringify({ lean }) });
+  const res = await Promise.all(Array.from({ length: 6 }, () => app.request(`/api/protests/${id}/votes`, { method: "POST", headers: H2, body: JSON.stringify({ kind: "cause", direction: 1, strength: 2 }) })));
+  assert.equal(res.filter((r) => r.status === 200).length, 2); // 4 + 4 = 8 of 10; a third would need 12
+  const me = await (await app.request("/api/me", { headers: H2 })).json();
+  assert.equal(me.credits, 2);
 });
