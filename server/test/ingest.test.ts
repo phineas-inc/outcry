@@ -103,7 +103,8 @@ test("collect → classify → build produces a live movement visible through th
 
   const status = await (await app.request("/api/status")).json();
   assert.equal(status.movements, 1);
-  assert.ok(status.aiCallsToday >= 2);
+  // Counted in the pipeline's own (simulated) day, so read the stored counter rather than depending on today's real date.
+  assert.ok(Number((await db.first("SELECT value FROM meta WHERE key = 'ai_calls'")).value) >= 2);
 });
 
 test("admin ingest endpoint rejects missing or wrong tokens", async () => {
