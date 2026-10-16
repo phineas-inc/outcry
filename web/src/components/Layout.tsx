@@ -8,7 +8,10 @@ import Credit from "./Credit";
 import Icon from "./Icon";
 
 export default function Layout() {
-  const { pathname, search, key } = useLocation();
+  const location = useLocation();
+  const { search, key } = location;
+  // GitHub Pages serves /me as /me/, so compare paths without a trailing slash.
+  const pathname = location.pathname.length > 1 ? location.pathname.replace(/\/+$/, "") : location.pathname;
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const { me, notice, flash, dismissNotice } = useStore();
