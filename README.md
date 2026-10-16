@@ -2,7 +2,7 @@
 
 A live protest desk: track movements worldwide on a list or world map, see how Left / Center / Right media cover each one (with blindspots flagged), and weigh in with a daily budget of **Voice** using quadratic voting. Reading all three perspectives unlocks stronger votes and earns XP.
 
-Website: https://tahire29-spec.github.io/outcry/
+Website: https://phineas-inc.github.io/outcry/
 
 > **Data:** movements are built from real, current news. A bot reads public RSS feeds from ~40 outlets every hour, an AI model (Cloudflare Workers AI, free tier) picks out real protests and writes neutral titles/summaries **from the headlines only**, and stories reported by 2+ outlets become movements. Summaries can be wrong, so every movement links to its source articles. Left/Center/Right labels are approximate (`server/src/ingest/outlets.ts`, editable). Offline mode (no API) shows sample data instead.
 

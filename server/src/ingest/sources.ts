@@ -52,7 +52,7 @@ export function parseFeed(xml: string, feedUrl: string): Candidate[] {
 export async function fetchFeeds(fetchFn: Fetch, feeds: string[] = FEED_GROUPS[0]): Promise<{ items: Candidate[]; failed: string[] }> {
   const failed: string[] = [];
   const results = await Promise.allSettled(feeds.map(async (f) => {
-    const res = await fetchFn(f, { headers: { "User-Agent": "outcry-bot/1.0 (+https://github.com/tahire29-spec/outcry)", Accept: "application/rss+xml, application/xml, text/xml, */*" }, signal: AbortSignal.timeout(8000) });
+    const res = await fetchFn(f, { headers: { "User-Agent": "outcry-bot/1.0 (+https://github.com/phineas-inc/outcry)", Accept: "application/rss+xml, application/xml, text/xml, */*" }, signal: AbortSignal.timeout(8000) });
     if (!res.ok) throw new Error(String(res.status));
     return parseFeed(await res.text(), f);
   }));

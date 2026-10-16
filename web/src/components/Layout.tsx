@@ -82,7 +82,7 @@ export default function Layout() {
         {!isApp && (
           <div className="site-footer">
             <div><strong>OUTCRY</strong><span>{t("footer.tag")}</span></div>
-            <nav aria-label={t("nav.footer")}><Link to="/about">{t("nav.about")}</Link><Link to="/privacy">{t("footer.privacy")}</Link><Link to="/accessibility">{t("footer.a11y")}</Link><a href="https://github.com/tahire29-spec/outcry" target="_blank" rel="noreferrer">{t("footer.open")}</a></nav>
+            <nav aria-label={t("nav.footer")}><Link to="/about">{t("nav.about")}</Link><Link to="/privacy">{t("footer.privacy")}</Link><Link to="/accessibility">{t("footer.a11y")}</Link><a href="https://github.com/phineas-inc/outcry" target="_blank" rel="noreferrer">{t("footer.open")}</a></nav>
           </div>
         )}
         <Credit />

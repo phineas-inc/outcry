@@ -12,3 +12,4 @@ data/
 seed.sql
 .wrangler/
 migrate.sql
+!web/.env

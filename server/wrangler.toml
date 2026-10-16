@@ -4,7 +4,7 @@ compatibility_date = "2025-01-01"
 
 [vars]
 # Comma-separated site origins allowed to call the API.
-ALLOWED_ORIGINS = "https://tahire29-spec.github.io"
+ALLOWED_ORIGINS = "https://phineas-inc.github.io,https://outcry.tanishqahire.com"
 
 [[d1_databases]]
 binding = "DB"

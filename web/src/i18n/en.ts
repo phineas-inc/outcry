@@ -80,12 +80,12 @@ export const pagesEn: Record<"method" | "privacy" | "accessibility", PageDoc> = 
   privacy: {
     title: "No accounts. No tracking.", eyebrow: "Privacy",
     blocks: [
-      { h: "Who is responsible", p: "Outcry is a personal, non-commercial open-source project run by Tanishq Ahire. Contact: [tanishqahire.com](https://tanishqahire.com) or an issue on [GitHub](https://github.com/tahire29-spec/outcry/issues)." },
+      { h: "Who is responsible", p: "Outcry is a personal, non-commercial open-source project run by Tanishq Ahire. Contact: [tanishqahire.com](https://tanishqahire.com) or an issue on [GitHub](https://github.com/phineas-inc/outcry/issues)." },
       { h: "What we store and why", p: "When you vote or read, your browser creates a random identifier (a UUID) and stores it locally. It lets the server enforce your daily Voice budget and remember your progress. Server-side we keep that identifier together with your votes, which perspectives you read, and your XP and streak. The legal basis is our legitimate interest in running the service you asked for (GDPR Art. 6(1)(f)). The identifier is not linked to your name, email or location." },
       { h: "What we don't do", p: "No accounts, no advertising or analytics trackers, no third-party cookies, no Google Fonts (fonts are self-hosted). We store nothing in cookies; only the identifier, your theme and language choice in your browser's local storage, which is needed for the site to work as you asked." },
       { h: "Logs and hosting", p: "The site is hosted on GitHub Pages and the API on Cloudflare. Like any host they process technical data such as your IP address to deliver pages and protect against abuse. We don't receive or use it beyond short-lived rate limiting." },
       { h: "Your rights", p: "You can download everything we hold about your device, or delete it, on your [profile page](/me). You also have the right to complain to your data-protection authority. Identifiers are kept until you delete them." },
-      { p: "Outcry is open source: [github.com/tahire29-spec/outcry](https://github.com/tahire29-spec/outcry)." },
+      { p: "Outcry is open source: [github.com/phineas-inc/outcry](https://github.com/phineas-inc/outcry)." },
     ],
   },
   accessibility: {
@@ -94,7 +94,7 @@ export const pagesEn: Record<"method" | "privacy" | "accessibility", PageDoc> = 
       { p: "We want Outcry to be usable by everyone. We aim to meet **WCAG 2.1 level AA**, the standard referenced by EN 301 549 and the European Accessibility Act. This statement was last reviewed on 11 October 2026." },
       { h: "What we've done", p: "Light and dark themes with checked contrast; full keyboard operation including voting strength and dialog focus handling; a skip link; screen-reader labels; respect for reduced-motion settings; a layout that reflows down to 320 px; and German and English versions." },
       { h: "Known limitations", p: "The world map is visual by nature. The list view offers the same information and is the accessible alternative. Movement titles, summaries and article headlines are in English only, and AI-written summaries can contain errors. We have tested with automated tools and keyboard-only use, but not yet with a range of screen readers or with disabled users." },
-      { h: "Give feedback", p: "If you hit a barrier, tell us at [tanishqahire.com](https://tanishqahire.com) or on [GitHub](https://github.com/tahire29-spec/outcry/issues) and we'll try to fix it." },
+      { h: "Give feedback", p: "If you hit a barrier, tell us at [tanishqahire.com](https://tanishqahire.com) or on [GitHub](https://github.com/phineas-inc/outcry/issues) and we'll try to fix it." },
     ],
   },
 };

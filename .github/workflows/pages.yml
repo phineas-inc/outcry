@@ -12,7 +12,9 @@ jobs:
       - run: npm ci && npm run build && cp dist/index.html dist/404.html
         working-directory: web
         env:
-          VITE_BASE: /outcry/
+          # To serve from a custom domain at the root, set repo variables SITE_BASE=/ and SITE_URL=https://your.domain/
+          VITE_BASE: ${{ vars.SITE_BASE || '/outcry/' }}
+          VITE_SITE_URL: ${{ vars.SITE_URL || 'https://phineas-inc.github.io/outcry/' }}
           VITE_API_URL: ${{ vars.API_URL }}
       - uses: actions/upload-pages-artifact@v3
         with: { path: web/dist }

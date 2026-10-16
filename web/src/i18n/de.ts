@@ -79,12 +79,12 @@ export const pagesDe: Record<"method" | "privacy" | "accessibility", PageDoc> = 
   privacy: {
     title: "Keine Konten. Kein Tracking.", eyebrow: "Datenschutz",
     blocks: [
-      { h: "Verantwortlicher", p: "Outcry ist ein privates, nicht kommerzielles Open-Source-Projekt von Tanishq Ahire. Kontakt: [tanishqahire.com](https://tanishqahire.com) oder ein Issue auf [GitHub](https://github.com/tahire29-spec/outcry/issues)." },
+      { h: "Verantwortlicher", p: "Outcry ist ein privates, nicht kommerzielles Open-Source-Projekt von Tanishq Ahire. Kontakt: [tanishqahire.com](https://tanishqahire.com) oder ein Issue auf [GitHub](https://github.com/phineas-inc/outcry/issues)." },
       { h: "Was wir speichern und warum", p: "Wenn du abstimmst oder liest, erzeugt dein Browser eine zufällige Kennung (UUID) und speichert sie lokal. Sie ermöglicht dem Server, dein tägliches Stimmen-Budget durchzusetzen und deinen Fortschritt zu merken. Serverseitig speichern wir diese Kennung zusammen mit deinen Stimmen, den gelesenen Perspektiven sowie Erfahrungspunkten und Serie. Rechtsgrundlage ist unser berechtigtes Interesse am Betrieb des von dir genutzten Dienstes (Art. 6 Abs. 1 lit. f DSGVO). Die Kennung ist nicht mit deinem Namen, deiner E-Mail-Adresse oder deinem Standort verknüpft." },
       { h: "Was wir nicht tun", p: "Keine Konten, keine Werbe- oder Analyse-Tracker, keine Cookies von Dritten, keine Google Fonts (Schriften werden selbst gehostet). Wir setzen keine Cookies; nur die Kennung sowie deine Design- und Sprachwahl liegen im lokalen Speicher deines Browsers, was für die Funktion der Seite nach deinem Wunsch erforderlich ist." },
       { h: "Protokolle und Hosting", p: "Die Website wird bei GitHub Pages gehostet, die API bei Cloudflare. Wie jeder Hoster verarbeiten sie technische Daten wie deine IP-Adresse, um Seiten auszuliefern und Missbrauch abzuwehren. Wir erhalten oder nutzen diese nicht, außer für eine kurzlebige Anfragebegrenzung." },
       { h: "Deine Rechte", p: "Auf deiner [Profilseite](/me) kannst du alles herunterladen, was wir zu deinem Gerät speichern, oder es löschen. Du hast außerdem das Recht, dich bei deiner Datenschutzbehörde zu beschweren. Kennungen werden gespeichert, bis du sie löschst." },
-      { p: "Outcry ist Open Source: [github.com/tahire29-spec/outcry](https://github.com/tahire29-spec/outcry)." },
+      { p: "Outcry ist Open Source: [github.com/phineas-inc/outcry](https://github.com/phineas-inc/outcry)." },
     ],
   },
   accessibility: {
@@ -93,7 +93,7 @@ export const pagesDe: Record<"method" | "privacy" | "accessibility", PageDoc> = 
       { p: "Wir möchten, dass Outcry für alle nutzbar ist. Wir streben die Einhaltung von **WCAG 2.1 Stufe AA** an, dem Standard, auf den EN 301 549 und der European Accessibility Act verweisen. Diese Erklärung wurde zuletzt am 11. Oktober 2026 überprüft." },
       { h: "Was wir getan haben", p: "Helles und dunkles Design mit geprüftem Kontrast; vollständige Tastaturbedienung inklusive Stimmstärke und Fokusführung im Dialog; ein Sprunglink; Beschriftungen für Screenreader; Rücksicht auf reduzierte Bewegung; ein Layout, das bis 320 px umbricht; sowie deutsche und englische Version." },
       { h: "Bekannte Einschränkungen", p: "Die Weltkarte ist von Natur aus visuell. Die Listenansicht bietet dieselben Informationen und ist die barrierefreie Alternative. Titel, Zusammenfassungen und Schlagzeilen der Bewegungen gibt es nur auf Englisch, und KI-Zusammenfassungen können Fehler enthalten. Wir haben mit automatisierten Werkzeugen und reiner Tastaturbedienung getestet, aber noch nicht mit verschiedenen Screenreadern oder mit Menschen mit Behinderungen." },
-      { h: "Rückmeldung geben", p: "Wenn du auf eine Barriere stößt, schreib uns über [tanishqahire.com](https://tanishqahire.com) oder auf [GitHub](https://github.com/tahire29-spec/outcry/issues) – wir versuchen, sie zu beheben." },
+      { h: "Rückmeldung geben", p: "Wenn du auf eine Barriere stößt, schreib uns über [tanishqahire.com](https://tanishqahire.com) oder auf [GitHub](https://github.com/phineas-inc/outcry/issues) – wir versuchen, sie zu beheben." },
     ],
   },
 };
