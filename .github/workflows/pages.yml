@@ -9,7 +9,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 24 }
-      - run: npm ci && npm run build && cp dist/index.html dist/404.html
+      # 404.html is the SPA fallback for deep links; real copies of index.html for the fixed pages make them return 200 (better for link previews and crawlers).
+      - run: |
+          npm ci && npm run build
+          cp dist/index.html dist/404.html
+          for route in feed about me privacy accessibility; do mkdir -p "dist/$route" && cp dist/index.html "dist/$route/index.html"; done
         working-directory: web
         env:
           # To serve from a custom domain at the root, set repo variables SITE_BASE=/ and SITE_URL=https://your.domain/
