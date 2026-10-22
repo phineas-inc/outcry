@@ -328,9 +328,7 @@ button.article { text-align: left; border-left: 0; border-right: 0; border-botto
 .map-sidebar { overflow: visible; min-height: 0; }
 .map-stage { min-height: 0; }
 @media (max-width: 720px) {
-  .topbar .voice { margin-left: auto; }
   .topbar.has-search { height: 104px; padding-bottom: 44px; box-sizing: border-box; }
-    .topbar:not(.has-search) .voice { margin-left: auto; }
 }
 
 .ai-note { color: var(--dim); font-size: 12px; margin: -6px 0 14px; max-width: 610px; }
@@ -355,7 +353,8 @@ main:focus { outline: none; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .prose a:not(.cta), .muted a, .ai-note a, .page a:not(.cta):not(.history-link) { text-decoration: underline; text-underline-offset: 3px; }
 .topbar .tools { display: flex; gap: 6px; align-items: center; margin-left: auto; }
-.topbar > .search ~ .tools, .topbar > .view-toggle ~ .tools { margin-left: 0; }
+/* wide screens: the search box takes the free space; narrow screens: the tools always sit at the right, next to Voice */
+@media (min-width: 721px) { .topbar > .search ~ .tools { margin-left: 0; } }
 .tool-btn { min-width: 44px; height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); background: transparent; color: var(--paper); cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: .06em; padding: 0 8px; }
 .tool-btn:hover { border-color: var(--paper); }
 .avatar { width: 44px; height: 44px; }
@@ -455,4 +454,12 @@ html:has(.map-page), html:has(.map-page) body { overflow: hidden; overscroll-beh
   .app.map-page footer { display: none; }
   .tabbar a { padding: 4px 0; flex-direction: row; justify-content: center; gap: 8px; }
   .detail-panel { max-height: 100dvh; }
+}
+.world-svg { touch-action: none; }
+
+/* One header, every screen: brand on the left; theme + language, Voice and profile pinned right on phones */
+@media (max-width: 720px) {
+  .topbar .tools { margin-left: auto; }
+  .topbar .voice { margin-left: 0; }
+  .topbar .brand { flex: 0 0 auto; }
 }

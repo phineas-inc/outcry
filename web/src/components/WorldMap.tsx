@@ -24,11 +24,15 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
   const { t } = useI18n();
   const place = usePlace();
   const [view, setView] = useState<View>({ k: 1, x: 0, y: 0 });
+  const viewState = view;
   const [hover, setHover] = useState<{ p: Protest; left: number; top: number } | null>(null);
   const [sidebar, setSidebar] = useState(() => typeof window !== "undefined" && window.innerWidth > 720);
   const stage = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const drag = useRef<{ id: number; sx: number; sy: number; vx: number; vy: number; moved: boolean } | null>(null);
+  const pointers = useRef(new Map<number, { x: number; y: number }>()); // every finger / mouse button currently down
+  const pinch = useRef<{ dist: number; mx: number; my: number } | null>(null); // last two-finger distance and midpoint (client px)
+  const viewRef = useRef<View>({ k: 1, x: 0, y: 0 });
 
   const points = useMemo<Pt[]>(() => protests.flatMap((p) => {
     const xy = projection([p.lng, p.lat]);
@@ -47,6 +51,7 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
   }, [points, view.k]);
 
   const clamp = (v: View): View => {
+    if (![v.k, v.x, v.y].every(Number.isFinite)) return viewRef.current;
     const k = Math.min(MAX_K, Math.max(1, v.k));
     return { k, x: Math.min(120, Math.max(W * (1 - k) - 120, v.x)), y: Math.min(80, Math.max(H * (1 - k) - 80, v.y)) };
   };
@@ -57,6 +62,7 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
   const toUnits = (clientX: number, clientY: number) => {
     const r = svg.current!.getBoundingClientRect();
     const s = Math.min(r.width / W, r.height / H); // preserveAspectRatio "meet"
+    if (!s) return [W / 2, H / 2]; // not laid out yet (zero-size box): avoid NaN poisoning the view
     return [(clientX - r.left - (r.width - W * s) / 2) / s, (clientY - r.top - (r.height - H * s) / 2) / s];
   };
 
@@ -71,21 +77,66 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
   }, []);
 
   useEffect(() => {
+    viewRef.current = viewState;
+  }, [viewState]);
+
+  useEffect(() => {
     const el = svg.current;
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       const [cx, cy] = toUnits(e.clientX, e.clientY);
-      zoomAt(e.deltaY < 0 ? 1.25 : 0.8, cx, cy);
+      // Trackpad pinch arrives as small ctrl+wheel deltas; a mouse wheel notch is ~100. Both map to a smooth exponential zoom.
+      const factor = Math.min(2, Math.max(0.5, Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0025))));
+      zoomAt(factor, cx, cy);
     };
+    // iOS Safari would otherwise zoom the whole page when pinching the map.
+    const stopGesture = (e: Event) => e.preventDefault();
     el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
+    el.addEventListener("gesturestart", stopGesture);
+    el.addEventListener("gesturechange", stopGesture);
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("gesturestart", stopGesture);
+      el.removeEventListener("gesturechange", stopGesture);
+    };
   }, []);
 
+  const twoPointers = () => {
+    const [a, b] = [...pointers.current.values()];
+    return { dist: Math.hypot(a.x - b.x, a.y - b.y) || 1, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 };
+  };
   const onPointerDown = (e: React.PointerEvent) => {
-    drag.current = { id: e.pointerId, sx: e.clientX, sy: e.clientY, vx: view.x, vy: view.y, moved: false };
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.current.size === 1) {
+      drag.current = { id: e.pointerId, sx: e.clientX, sy: e.clientY, vx: viewRef.current.x, vy: viewRef.current.y, moved: false };
+    } else if (pointers.current.size === 2) {
+      // A second finger turns the drag into a pinch; mark it as moved so releasing doesn't "click" a marker.
+      pinch.current = twoPointers();
+      if (drag.current) drag.current.moved = true;
+      svg.current?.setPointerCapture(e.pointerId);
+      setHover(null);
+    }
   };
   const onPointerMove = (e: React.PointerEvent) => {
+    if (!pointers.current.has(e.pointerId)) return;
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (pointers.current.size >= 2 && pinch.current) {
+      const now = twoPointers();
+      const prev = pinch.current;
+      const [px, py] = toUnits(prev.mx, prev.my); // map point that was under the fingers' midpoint
+      const [cx, cy] = toUnits(now.mx, now.my);   // where the midpoint is now (so dragging two fingers also pans)
+      const factor = now.dist / prev.dist;
+      setView((v) => {
+        const k = Math.min(MAX_K, Math.max(1, v.k * factor));
+        const wx = (px - v.x) / v.k, wy = (py - v.y) / v.k; // world coordinates under the old midpoint
+        return clamp({ k, x: cx - wx * k, y: cy - wy * k });
+      });
+      pinch.current = now;
+      return;
+    }
+
     const d = drag.current;
     if (!d || d.id !== e.pointerId) return;
     const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
@@ -93,9 +144,23 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
     if (!d.moved) { d.moved = true; svg.current?.setPointerCapture(e.pointerId); setHover(null); }
     const r = svg.current!.getBoundingClientRect();
     const s = Math.min(r.width / W, r.height / H);
+    if (!s) return;
     setView((v) => clamp({ ...v, x: d.vx + dx / s, y: d.vy + dy / s }));
   };
-  const onPointerUp = () => { setTimeout(() => (drag.current = null), 0); };
+  const onPointerUp = (e: React.PointerEvent) => {
+    pointers.current.delete(e.pointerId);
+    pinch.current = null;
+    const rest = [...pointers.current.entries()];
+    if (rest.length === 1) {
+      // One finger stays down after a pinch: continue as a drag from where it is, without a jump.
+      const [id, p] = rest[0];
+      drag.current = { id, sx: p.x, sy: p.y, vx: viewRef.current.x, vy: viewRef.current.y, moved: true };
+    } else if (rest.length >= 2) {
+      pinch.current = twoPointers();
+    } else {
+      setTimeout(() => (drag.current = null), 0);
+    }
+  };
   const guard = (fn: () => void) => () => { if (!drag.current?.moved) fn(); };
 
   const showTip = (p: Protest, el: Element) => {
@@ -112,7 +177,8 @@ export default function WorldMap({ protests, onOpen }: { protests: Protest[]; on
     <div className={`map-shell ${sidebar ? "" : "no-side"}`}>
       <div className="map-stage" ref={stage}>
         <svg ref={svg} className="world-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="group" aria-label={t("map.aria")}
-          onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
+          onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}
+          onDoubleClick={(e) => { if (!(e.target as Element).closest(".marker-g,.cluster-g")) { const [cx, cy] = toUnits(e.clientX, e.clientY); zoomAt(2, cx, cy); } }}>
           <g transform={`translate(${view.x} ${view.y}) scale(${view.k})`}>
             <path d={spherePath} className="map-sphere" />
             <path d={landPath} className="map-land" style={{ strokeWidth: 0.6 * inv }} />
